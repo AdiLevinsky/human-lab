@@ -1,0 +1,131 @@
+{% if current_user.id == 1 %}
+    {% include "adminHeader.html" %}
+{% else %}
+    {% include "lect_header.html" %}
+{% endif %}
+{%   for i in table_len %}
+       <form id="form{{ i }}" name="form{{ i }}" method="post" action="{{ url_for('edit_appo') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/></form>
+    {%   endfor %}
+<div class="table-responsive">
+    <table id="appo_table" class="table" style="text-align: center">
+    <thead class="table-dark">
+        <tr>
+            <th>
+                תאריך
+            </th>
+            <th>
+                שעה
+            </th>
+            <th>
+                משך הפגישה
+            </th>
+            <th>
+                סיום הפגישה
+            </th>
+            <th>
+                מיקום
+            </th>
+            <th>
+                סוג
+            </th>
+            <th>
+                מגבלת אנשים
+            </th>
+            <th>
+                משתמשים שאושרו
+            </th>
+            <th>
+                משתמשים שמחכים לאישור
+            </th>
+            <th>
+                הודעות
+            </th>
+            <th>
+                מחק
+            </th>
+            <th>
+                ערוך
+            </th>
+        </tr>
+        </thead>
+        {%  for i in table_len %}
+            <tr>
+
+              <td>{{ appo_user[i].appo_date }}
+              <input type="hidden" form="form{{ i }}" name="ap_date" class="form-control" value="{{ appo_user[i].appo_date }}" readonly>
+            </td>
+              <td>{{ appo_user[i].appo_start_hour }}
+              <input type="hidden" form="form{{ i }}" name="ap_hour_st" class="form-control" value="{{ appo_user[i].appo_start_hour }}" readonly>
+            </td>
+              <td>{{ appo_user[i].appo_dur }}
+              <input type="hidden" form="form{{ i }}" name="ap_dur" class="form-control" value="{{ appo_user[i].appo_dur }}" readonly>
+            </td>
+              <td>{{ appo_user[i].appo_end_hour }}
+              <input type="hidden" form="form{{ i }}" name="ap_hour_end" class="form-control" value="{{ appo_user[i].appo_end_hour }}" readonly>
+            </td>
+              <td>{{ appo_user[i].appo_loc }}
+              <input type="hidden" form="form{{ i }}" name="ap_loc" class="form-control" value="{{ appo_user[i].appo_loc }}" readonly>
+            </td>
+              <td>{{ appo_user[i].appo_type }}
+                <input type="hidden" form="form{{ i }}" name="ap_type" class="form-control" value="{{ appo_user[i].appo_type }}" readonly>
+            </td>
+                <td>{{ appo_user[i].appo_limit }}
+                <input type="hidden" form="form{{ i }}" name="ap_limit" class="form-control" value="{{ appo_user[i].appo_limit }}" readonly>
+            </td>
+                {% if appo_user[i].appo_user_aproved %}
+                <td>
+                    {% for j in range(0,appo_user[i].appo_user_aproved[-1]) %}
+                        {% if appo_user[i].appo_user_aproved[j].split(" ")[3] %}
+                        {% set user_name = " ".join(appo_user[i].appo_user_aproved[j].split(" ")[0:2])+ "\n " +appo_user[i].appo_user_aproved[j].split(" ")[3] %}
+                        {% else %}
+                        {% set user_name = " ".join(appo_user[i].appo_user_aproved[j].split(" ")[0:2]) %}
+                        {% endif %}
+                        <form action="#" method="post">  <textarea  name="user_name" style="text-align: right"  readonly>{{ user_name }}</textarea>
+                            <div class="input-group">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                <input type="hidden" value="{{ appo_user[i].appo_date }}" name="ap_date">
+                                <input type="hidden" name="ap_hour_st"  value="{{ appo_user[i].appo_start_hour }}" >
+                                <input type="hidden" name="del_user" value="{{ appo_user[i].appo_user_aproved[j] }}" readonly>
+                            <input type="submit" class="form-control" name="action" value="מחק" />
+                            </div>
+                        </form>
+                    {% endfor %}
+            </td>
+            {% else %}
+            <td>אין</td>
+            {% endif %}
+            {% if appo_user[i].appo_user_wait %}
+                <td>
+                    {% for j in range(0,appo_user[i].appo_user_wait[-1]) %}
+                        {% if appo_user[i].appo_user_wait[j].split(" ")[3] %}
+                        {% set user_name = " ".join(appo_user[i].appo_user_wait[j].split(" ")[0:2])+ "\n " +appo_user[i].appo_user_wait[j].split(" ")[3] %}
+                        {% else %}
+                        {% set user_name = " ".join(appo_user[i].appo_user_wait[j].split(" ")[0:2]) %}
+                        {% endif %}
+                        <form action="#" method="post">  <textarea type="text" name="user_name" readonly style="text-align: right">{{ user_name }}</textarea>
+                            <div class="input-group">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                <input type="hidden" value="{{ appo_user[i].appo_date }}" name="ap_date">
+                                <input type="hidden" name="ap_hour_st"  value="{{ appo_user[i].appo_start_hour }}" >
+                                <input type="hidden" name="add_user" value="{{ appo_user[i].appo_user_wait[j] }}" readonly>
+                            <input type="submit" class="form-control" name="action" value="דחייה" />
+                            <input type="submit" class="form-control" name="action" value="אישור" />
+                            </div>
+                        </form>
+                    {% endfor %}
+            </td>
+            {% else %}
+            <td>אין</td>
+            {% endif %}
+            <td><textarea name="msgs" form="form{{ i }}" style="text-align: right;width: 100%" readonly>{{ appo_user[i].appo_msg }}</textarea><input type="submit" form="form{{ i }}" name="action2" value="שלח הודעה" class="btn btn-primary" style="width: 100%"></td>
+            <td><input type="submit" form="form{{ i }}" name="action2" value="מחק" class="btn-danger btn" style="width: 100%"></td>
+                <td><input type="submit" form="form{{ i }}" name="action2" value="ערוך פגישה זאת" class="btn btn-primary" style="width: 100%"></td>
+            </tr>
+
+        {%  endfor %}
+    </table>
+    </div>
+
+
+</body>
+</html>

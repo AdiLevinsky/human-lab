@@ -1,0 +1,152 @@
+{% if current_user.id == 1 %}
+    {% include "adminHeader.html" %}
+{% else %}
+    {% include "student_header.html" %}
+{% endif %}
+<link rel="stylesheet" href="/static/css/main.css">
+<div class="container-fluid">
+  <h1 style="text-align: center">קטגוריות</h1>
+  <ul class="nav nav-tabs" role="tablist">
+      {% for i in cat %}
+  <li class="nav-item" role="presentation">
+    <a class="nav-link" data-bs-toggle="tab" href="#{{ i }}">{{ i }}</a>
+  </li>
+      {% endfor %}
+</ul>
+  <div class="tab-content">
+      {% for i in len_cat %}
+    <div id="{{ cat[i] }}" class=" tab-pane fade">
+    <div class="tabbable">
+          <ul class="nav nav-tabs" >
+        {% for k in len_tags %}
+            {% if tags[k].split('_')[0] == cat[i] %}
+                {%  set tag = tags[k].split('_')[1]%}
+                    <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#{{ cat[i] }}{{ k }}">{{ tag }}</a>
+                    </li>
+            {% endif %}
+      {% endfor %}
+</ul>
+    <div class="tab-content">
+        {% for k in len_tags %}
+            {% if tags[k].split('_')[0] == cat[i] %}
+            <div id="{{ cat[i] }}{{ k }}" class="tab tab-pane fade">
+          <div class="bp3-overflow-list">
+          <form method="post" style="display: inline" action="{{ url_for('set_appo') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/><input type="hidden" value="{{ i }}" name="record" ><button type="submit" class="btn btn-primary">סרטונים והקלטות</button></form>
+        {% for j in user_cat %}
+            {% for user_category in j.category.split(",") %}
+        {% if user_category in cat[i] %}
+            {% if j.tags != None %}
+                {% set tags2 = j.tags.split("|") %}
+            {% for usertags in tags2 %}
+                {% if usertags in tags[k] %}
+      <form method="post" style="display: inline" action="{{ url_for('set_appo') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/><input type="hidden" value="{{ j.uname }}" name="val" ><button type="submit" class="btn btn-primary">{{ j.fname }} {{ j.lname }}</button></form>
+        {% endif %}
+            {% endfor %}
+            {% endif %}
+        {% endif %}
+
+            {% endfor %}
+    {% endfor %}
+          </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+          </div>
+    </div>
+          </div>
+    {% endfor %}
+    </div>
+{% if found %}
+    <div class="container">
+    <div class="row">
+    <div class="col-lg-6">
+        <img src="static/uploads/{{ found[0].image }}" width="300">
+    </div>
+        <div class="col-lg-6" style="text-align: center">
+        <h1>{{ found[0].fname }} {{ found[0].lname }}</h1>
+            <p>{{ found[0].desc }}</p>
+
+
+    </div>
+    </div>
+    <div class="row">
+        <p id="cal">{{ caln | safe}}</p>
+    </div>
+    </div>
+    {% for appo in month_appo %}
+    <div class="modal" id="a{{ appo.appo_date }}-{{ appo.appo_start_hour[:2] }}_{{ appo.appo_start_hour[3:]  }}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">פגישה {{ appo.appo_date }}</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body" style="text-align: right">
+          <form onsubmit="formSubmit()" name="{{ appo.appo_start_hour[:2] }}_{{ appo.appo_start_hour[3:]  }}" id="{{ appo.appo_start_hour[:2] }}_{{ appo.appo_start_hour[3:]  }}" method="post" action="{{ url_for('set_appo') }}">
+              <input type="hidden" name="ap_uname" value="{{ appo.uname }}">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+              <label for="ap_lect" class="form-label">מרצה</label>
+              <input type="text" name="ap_lect" class="form-control" value="{{ appo.fname }} {{ appo.lname }}" readonly>
+              <label for="ap_date" class="form-label">תאריך</label>
+              <input type="text" name="ap_date" class="form-control" value="{{ appo.appo_date }}" readonly>
+              <label for="ap_hour_st" class="form-label">שעה</label>
+              <input type="text" name="ap_hour_st" class="form-control" value="{{ appo.appo_start_hour }}" readonly>
+              <label for="ap_dur" class="form-label">משך הפגישה</label>
+              <input type="text" name="ap_dur" class="form-control" value="{{ appo.appo_dur }}" readonly>
+              <label for="ap_hour_end" class="form-label">שעת סיום</label>
+              <input type="text" name="ap_hour_end" class="form-control" value="{{ appo.appo_end_hour }}" readonly>
+              <label for="ap_loc" class="form-label">מיקום</label>
+              <input type="text" name="ap_loc" class="form-control" value="{{ appo.appo_loc }}" readonly>
+              <label for="ap_type" class="form-label">סוג פגישה</label>
+              <input type="text" name="ap_type" class="form-control" value="{{ appo.appo_type }}" readonly>
+              <label for="ap_com" class="form-label">הערות</label>
+              <textarea class="form-control" rows="2" id="ap_com" name="ap_com" style="text-align: right"></textarea>
+
+          </form>
+
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" id="sub_btn" form="{{ appo.appo_start_hour[:2] }}_{{ appo.appo_start_hour[3:]  }}">שלח</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">סגור</button>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+    {% endfor %}
+{% endif %}
+{% if records %}
+    <div class="container">
+    <h2 style="text-align: center">{{ record_cat }}</h2>
+    <div class="row">
+    {% for i in records_len %}
+        <div class="col-lg-4 col-sm-12 col-md-6" style="text-align: center">
+    <h3>{{ records[i].title }}</h3>
+    <p>{{ records[i].desc }}</p>
+    <a href="{{ records[i].link }}">{{ records[i].title }}</a>
+        </div>
+{% endfor %}
+    </div>
+    </div>
+{% endif %}
+</div>
+<script>
+function formSubmit(){
+    document.getElementById("ap_com").value = document.getElementById("ap_com").value.replace(" ","_")
+}
+$("ul.nav-tabs a").click(function (e) {
+  e.preventDefault();
+    $(this).tab('show');
+});
+
+</script>
+</body>
+</html>

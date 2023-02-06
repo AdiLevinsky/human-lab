@@ -1,0 +1,19 @@
+{% import "bootstrap/wtf.html" as wtf %}
+{% include "adminHeader.html" %}
+<div class="container">
+    <div class="row">
+
+      <div class="col-lg-8 col-md-10 mx-auto content">
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for message in messages %}
+           <p class="errors">{{ message }}</p>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+        {{ wtf.quick_form(form, button_map={"submit": "primary"},id="log-form") }}
+      </div>
+    </div>
+  </div>
+</body>
+</html>

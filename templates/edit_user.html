@@ -1,0 +1,36 @@
+{% include "adminHeader.html" %}
+<div class="container mt-3">
+
+
+
+      <form method="post" action="{{ url_for('edit_user') }}" style="text-align: right" onsubmit="return check_strong_password()">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+          <label for="uname1" class="form-label">שם משתמש</label>
+          <input type="text" name="uname1" value="{{ uname }}" class="form-control" readonly>
+          <label for="fname1" class="form-label">שם פרטי</label>
+          <input type="text" name="fname1" value="{{ fname }}" class="form-control">
+          <label for="lname1" class="form-label">שם משפחה</label>
+          <input type="text" name="lname1" value="{{ lname }}" class="form-control">
+          <label for="password1" class="form-label">סיסמה</label>
+          <input type="text" name="password1" class="form-control">
+          <input type="submit" value="שנה" style="width:100%" class="btn-primary">
+          </form>
+
+    </div>
+  </div>
+<script>
+    function check_strong_password(){
+        if document.getElementsByName("password1")[0].value != ""{
+            if (document.getElementsByName("password1")[0].value.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/)) {
+                return true;
+            } else {
+                alert("הסיסמה חלשה ")
+                return false;
+
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

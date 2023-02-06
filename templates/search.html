@@ -1,0 +1,24 @@
+{% if current_user.id == 1 %}
+    {% include "adminHeader.html" %}
+{% else %}
+    {% include "student_header.html" %}
+{% endif %}
+<link rel="stylesheet" href="/static/css/main.css">
+<div class="container-fluid" style="text-align: right">
+    {% for i in lecturers %}
+          <form method="post" style="display: inline" action="{{ url_for('set_appo') }}">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+              <input type="hidden" value="{{ i.uname }}" name="val" >
+              <button type="submit" style="width: 35%;" class="btn btn-primary">{{ i.fname }} {{ i.lname }}</button>
+          </form>
+        <p>
+            {{ i.desc }}
+        </p>
+        <br>
+        <br>
+    {% endfor %}
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+{% include "lect_header.html" %}
+<div class="container mt-3">
+
+
+
+      <form method="post" action="{{ url_for('lect_profile') }}" style="text-align: right" enctype="multipart/form-data" onsubmit="return check_strong_password()">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+          <label for="uname1" class="form-label">שם משתמש</label>
+          <input type="text" name="uname1" value="{{ lect_info.uname }}" class="form-control" readonly>
+          <label for="fname1" class="form-label">שם פרטי</label>
+          <input type="text" name="fname1" value="{{ lect_info.fname }}" class="form-control">
+          <label for="lname1" class="form-label">שם משפחה</label>
+          <input type="text" name="lname1" value="{{ lect_info.lname }}" class="form-control">
+          <label for="password1" class="form-label">סיסמה</label>
+          <input type="text" name="password1" class="form-control">
+          <label for="category1" class="form-label">קטגוריה</label>
+          <input type="text" class="form-control" name="category1" id="category1" value="{{ lect_info.category }}" readonly>
+          <label for="desc1" class="form-label">תיאור</label>
+          <input type="text" name="desc1" class="form-control" value="{{ lect_info.desc }}" readonly>
+          <label for="image1" class="form-label">תמונה<br><img width="300" src="static/uploads/{{ lect_info.image }}"></label>
+
+          <input type="file" name="image1" class="form-control" >
+          <input type="submit" value="שנה" style="width:100%" class="btn-primary">
+          </form>
+
+    </div>
+  </div>
+<script>
+    function check_strong_password(){
+        if document.getElementsByName("password1")[0].value != ""{
+            if (document.getElementsByName("password1")[0].value.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/)) {
+                return true;
+            } else {
+                alert("הסיסמה חלשה ")
+                return false;
+
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

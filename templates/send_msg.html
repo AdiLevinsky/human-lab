@@ -1,0 +1,25 @@
+{% if current_user.id == 1 %}
+{% include "adminHeader.html" %}
+{% else %}
+    {% include "lect_header.html" %}
+{% endif %}
+<link rel="stylesheet" href="/static/css/send_msg.css">
+<div class="container mt-3 align_text_right" style="text-align: right">
+<form method="post" action="{{ url_for('sendmsg') }}" class="align_text_right">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    <input type="hidden"  name="id" value="{{ ap_id }}">
+      <input type="hidden"  name="lect" value="{{ lect }}">
+          <label for="ap_date1" class="form-label">תאריך</label>
+          <input type="text" name="ap_date1" value="{{ ap_date }}" class="form-control align_text_right" readonly>
+          <label for="ap_hour_st1" class="form-label">שעה</label>
+          <input type="text" name="ap_hour_st1" value="{{ ap_hour_st }}" class="form-control align_text_right" min="08:30" max="23:59" readonly>
+          <label for="ap_loc1" class="form-label">מיקום</label>
+          <input type="text" name="ap_loc1" class="form-control align_text_right" value="{{ ap_loc }}" readonly>
+  <label for="comment">:הודעות</label>
+<textarea class="form-control align_text_right" rows="5" id="comment" name="text" >{{ appo_msg}}</textarea>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
+
+</body>
+</html>

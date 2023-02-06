@@ -1,0 +1,77 @@
+<style>
+     ul
+     {
+         list-style-type: none;
+     }
+</style>
+{% include "adminHeader.html" %}
+<div class="container mt-3">
+
+
+
+      <form method="post" action="{{ url_for('edit_rec') }}" style="text-align: right">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+      <input type="hidden" name="id1" value="{{ rec_id1 }}">
+            <div class="form-group">
+          <label for="category" class="form-label">קטגוריה</label>
+            <ul id="category" class="form-control">
+            {% for i in category_len %}
+            <li><input type="checkbox" id="category-{{ i }}" name="{{ category[i] }}" value="{{ category[i] }}" onclick="add_tags('category-{{ i }}','{{ category[i] }}')">
+                <label for="category-{{ i }}">{{ category[i] }}</label></li>
+            {% endfor %}
+            </ul>
+           </div>
+            <div class="form-group">
+                <label for="tags" class="form-label">תת קטגוריה</label>
+            <ul id="tags" class="form-control">
+              {% for i in tags_len %}
+                  <li><input type="checkbox" id="tags-{{ i }}" name="{{ tags[i] }}" value="{{ tags[i] }}">
+                <label for="tags-{{ i }}">{{ tags[i] }}</label></li>
+                {% endfor %}
+            </ul>
+            </div>
+          <label for="title1" class="form-label">כותרת</label>
+          <input type="text" name="title1" value="{{ title }}" class="form-control">
+          <label for="desc1" class="form-label">תיאור</label>
+          <input type="text" name="desc1" value="{{ desc }}" class="form-control">
+          <label for="link1" class="form-label">לינק</label>
+          <input type="text" name="link1" class="form-control" value="{{ link }}">
+          <input type="submit" value="שנה" style="width:100%" class="btn-primary">
+          </form>
+
+    </div>
+<script>
+    $(document).ready(function (){
+        $('#tags').children().css({"display":"none"})
+        {% for i in checked_category %}
+            $("input[type='checkbox'][name='{{ i }}']").prop('checked',true)
+            //document.getElementsByName("{{ i }}").checked = true;
+            $("input[type='checkbox'][value^='{{ i }}']").parent().css({"display":"block"})
+        {% endfor %}
+    {% for i in checked_tags %}
+            $("input[type='checkbox'][name='{{ i }}']").prop('checked',true)
+
+    {% endfor %}
+    });
+
+    function add_tags(id,value){
+        var uncheck = $("input[type='checkbox'][id^=category-]").filter(':checked')
+
+        if (uncheck.length == 0){
+                $('#tags').css('display','none')
+                $('#tags').children().css({"display":"none"})
+                $('#tags').parent().find("label")[0].style.display = "none"
+        }
+        if($('#'+id).is(':checked')){
+            $('#tags').css('display','block')
+            $('#tags').parent().find("label")[0].style.display = "block"
+            $("input[type='checkbox'][value^="+value+"]").parent().css({"display":"block"})
+        }
+        else{
+           $("input[type='checkbox'][value^="+value+"_]").parent().css({"display":"none"})
+            $("input[type='checkbox'][value^="+value+"_]").prop('checked',false)
+        }
+    }
+</script>
+</body>
+</html>

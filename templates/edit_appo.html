@@ -1,0 +1,67 @@
+{% if current_user.id == 1 %}
+{% include "adminHeader.html" %}
+{% else %}
+    {% include "lect_header.html" %}
+{% endif %}
+<div class="container mt-3">
+<div class="row">
+    <div class="col-lg-3 col-md-3 col-sm-12">
+        {% if current_user.id == 1 %}
+            <iframe src="{{ url_for('admin_panel' ) }}" style="width: 100%;height: 100%;margin-top: 10px;"></iframe>
+{% else %}
+        <iframe src="{{ url_for('lecturer_panel') }}" style="width: 100%;height: 100%;margin-top: 10px;"></iframe>
+        {% endif %}
+    </div>
+<div class="col-lg-9 col-md-9 col-sm-12">
+
+      <form method="post" action="{{ url_for('edit_appo') }}"  id="log-form">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+      <input type="hidden"  name="id" value="{{ ap_id }}">
+      <input type="hidden"  name="lect" value="{{ lect }}">
+          <label for="ap_date1" class="form-label">תאריך</label>
+          <input type="date" name="ap_date1" value="{{ ap_date }}" class="form-control" readonly>
+          <label for="ap_hour_st1" class="form-label">שעה</label>
+          <input type="time" name="ap_hour_st1" value="{{ ap_hour_st }}" class="form-control" min="08:30" max="23:59">
+          <label for="ap_dur1" class="form-label"> משך הפגישה בדקות</label>
+          <input type="number" name="ap_dur1" value="{{ ap_dur }}" class="form-control" min="1">
+          <label for="ap_loc1" class="form-label">מיקום</label>
+          <input type="text" name="ap_loc1" class="form-control" value="{{ ap_loc }}">
+          <label for="appo_type1" class="form-label">סוג:</label>
+          <select class="form-select" name="appo_type1" id="appo_type1">
+              {% for i in range(0,2) %}
+                  {% if ty[i] in ap_type %}
+                    <option value="{{ ty[i] }}" selected="selected">{{ ty[i] }}</option>
+                  {% else %}
+                      <option value="{{ ty[i] }}">{{ ty[i] }}</option>
+                  {% endif %}
+              {% endfor %}
+          </select>
+          <label for="appo_limit1" class="form-label">כמות אנשים</label>
+          <input type="number" min="1" name="appo_limit1" class="form-control" id="appo_limit1" value="{{ ap_limit }}">
+          <input type="submit" value="שנה" style="width:100%;text-align: center" class="btn-primary">
+          </form>
+    </div>
+  </div>
+</div>
+<script>
+    //TODO לתקן את הפרטני ולהוסיף לשם ערך של מגבלת הקבוצה שווה אחד
+$('select').on('change', function() {
+    if ($("#appo_type1").val() == "קבוצה") {
+        $("#appo_limit1").css("display", "block")
+        $("label[for='appo_limit1']").css("display","inline")
+        $("#appo_limit1").val(1)
+
+    }
+    else if ($("#appo_type1").val() == "פרטני") {
+        $("#appo_limit1").css("display", "none")
+        $("label[for='appo_limit1']").css("display","none")
+        $("#appo_limit1").val(1)
+    }
+});
+    {% if error %}
+    alert("{{ error }}")
+    {% endif %}
+</script>
+
+</body>
+</html>
