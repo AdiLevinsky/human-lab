@@ -22,7 +22,8 @@
         input{
             text-align: right;
         }
-        select{
+
+        select {
             text-align: right;
         }
     </style>
@@ -30,35 +31,35 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="{{ url_for('admin_panel') }}">ראשי</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="collapsibleNavbar">
-      <ul class="navbar-nav" style="font-size: 1.5rem">
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('admin_panel') }}">טבלאות</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('add_student') }}">הוסף תלמיד</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('add_lecturer') }}">הוסף מרצה</a>
-        </li>
-          <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('add_rec') }}">הוסף הקלטה</a>
-        </li>
-          <li class="nav-item">
-          <a class="nav-link" href="{{url_for('admin_profile')}}">פרופיל</a>
-        </li>
-          <li class="nav-item">
-          <a class="nav-link" href="{{url_for('add_cat')}}">הוסף קטגוריה</a>
-        </li>
-          <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('logout') }}" style="float:left">יציאה</a>
-        </li>
-      </ul>
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ url_for('admin_panel.admin_panel') }}">ראשי</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav" style="font-size: 1.5rem">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('admin_panel.admin_panel') }}">טבלאות</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('add_student.add_student') }}">הוסף תלמיד</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('add_lecturer.add_lecturer') }}">הוסף מרצה</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('add_record.add_record') }}">הוסף הקלטה</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('admin_profile.admin_profile') }}">פרופיל</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('add_category.add_category') }}">הוסף קטגוריה</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('logout.logout') }}" style="float:left">יציאה</a>
+                </li>
+            </ul>
+        </div>
     </div>
-  </div>
 </nav>

@@ -2,18 +2,18 @@
 <div class="container mt-3">
 
 
-
-      <form method="post" action="{{ url_for('lect_profile') }}" style="text-align: right" enctype="multipart/form-data" onsubmit="return check_strong_password()">
-          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-          <label for="uname1" class="form-label">שם משתמש</label>
-          <input type="text" name="uname1" value="{{ lect_info.uname }}" class="form-control" readonly>
-          <label for="fname1" class="form-label">שם פרטי</label>
-          <input type="text" name="fname1" value="{{ lect_info.fname }}" class="form-control">
-          <label for="lname1" class="form-label">שם משפחה</label>
-          <input type="text" name="lname1" value="{{ lect_info.lname }}" class="form-control">
-          <label for="password1" class="form-label">סיסמה</label>
-          <input type="text" name="password1" class="form-control">
-          <label for="category1" class="form-label">קטגוריה</label>
+    <form method="post" action="{{ url_for('lecturer_profile.lecturer_profile') }}" style="text-align: right"
+          enctype="multipart/form-data" onsubmit="return check_strong_password()">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <label for="uname1" class="form-label">שם משתמש</label>
+        <input type="text" name="uname1" value="{{ lect_info.uname }}" class="form-control" readonly>
+        <label for="fname1" class="form-label">שם פרטי</label>
+        <input type="text" name="fname1" value="{{ lect_info.fname }}" class="form-control">
+        <label for="lname1" class="form-label">שם משפחה</label>
+        <input type="text" name="lname1" value="{{ lect_info.lname }}" class="form-control">
+        <label for="password1" class="form-label">סיסמה</label>
+        <input type="text" name="password1" class="form-control">
+        <label for="category1" class="form-label">קטגוריה</label>
           <input type="text" class="form-control" name="category1" id="category1" value="{{ lect_info.category }}" readonly>
           <label for="desc1" class="form-label">תיאור</label>
           <input type="text" name="desc1" class="form-control" value="{{ lect_info.desc }}" readonly>

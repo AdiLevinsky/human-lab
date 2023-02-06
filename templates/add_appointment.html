@@ -1,25 +1,25 @@
 {% import "bootstrap/wtf.html" as wtf %}
-<link rel="stylesheet" href="{{ url_for('static',filename='css/add_appo.css')}}">
+<link rel="stylesheet" href="{{ url_for('static',filename='css/add_appo.css') }}">
 {% if current_user.id == 1 %}
-{% include "adminHeader.html" %}
+    {% include "adminHeader.html" %}
 {% else %}
     {% include "lect_header.html" %}
 {% endif %}
 <div class="container">
     <div class="row">
-    <div class="col-lg-3 col-md-3 col-sm-12">
-        <div class="col-lg-12 col-md-12 mx-auto content">
-            <iframe src="{{ url_for('lecturer_panel') }}" ></iframe>
+        <div class="col-lg-3 col-md-3 col-sm-12">
+            <div class="col-lg-12 col-md-12 mx-auto content">
+                <iframe src="{{ url_for('lecturer_panel.lecturer_panel') }}"></iframe>
+            </div>
         </div>
-    </div>
-<div class="col-lg-9 col-md-9 col-sm-12">
-      <div class="col-lg-12 col-md-12 mx-auto content">
-      {% with messages = get_flashed_messages() %}
-        {% if messages %}
-          {% for message in messages %}
-           <p class="errors">{{ message }}</p>
-          {% endfor %}
-        {% endif %}
+        <div class="col-lg-9 col-md-9 col-sm-12">
+            <div class="col-lg-12 col-md-12 mx-auto content">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <p class="errors">{{ message }}</p>
+                        {% endfor %}
+                    {% endif %}
       {% endwith %}
         {{ wtf.quick_form(form, button_map={"submit": "primary"},id="log-form") }}
       </div>

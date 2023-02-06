@@ -22,35 +22,49 @@
             {% if tags[k].split('_')[0] == cat[i] %}
                 {%  set tag = tags[k].split('_')[1]%}
                     <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#{{ cat[i] }}{{ k }}">{{ tag }}</a>
+                        <a class="nav-link" data-bs-toggle="tab" href="#{{ cat[i] }}{{ k }}">{{ tag }}</a>
                     </li>
             {% endif %}
-      {% endfor %}
-</ul>
-    <div class="tab-content">
-        {% for k in len_tags %}
-            {% if tags[k].split('_')[0] == cat[i] %}
-            <div id="{{ cat[i] }}{{ k }}" class="tab tab-pane fade">
-          <div class="bp3-overflow-list">
-          <form method="post" style="display: inline" action="{{ url_for('set_appo') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/><input type="hidden" value="{{ i }}" name="record" ><button type="submit" class="btn btn-primary">סרטונים והקלטות</button></form>
-        {% for j in user_cat %}
-            {% for user_category in j.category.split(",") %}
-        {% if user_category in cat[i] %}
-            {% if j.tags != None %}
-                {% set tags2 = j.tags.split("|") %}
-            {% for usertags in tags2 %}
-                {% if usertags in tags[k] %}
-      <form method="post" style="display: inline" action="{{ url_for('set_appo') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/><input type="hidden" value="{{ j.uname }}" name="val" ><button type="submit" class="btn btn-primary">{{ j.fname }} {{ j.lname }}</button></form>
-        {% endif %}
-            {% endfor %}
-            {% endif %}
-        {% endif %}
+        {% endfor %}
+          </ul>
+        <div class="tab-content">
+            {% for k in len_tags %}
+                {% if tags[k].split('_')[0] == cat[i] %}
+                    <div id="{{ cat[i] }}{{ k }}" class="tab tab-pane fade">
+                        <div class="bp3-overflow-list">
+                            <form method="post" style="display: inline"
+                                  action="{{ url_for('set_appointment.set_appointment') }}"><input type="hidden"
+                                                                                                   name="csrf_token"
+                                                                                                   value="{{ csrf_token() }}"/><input
+                                    type="hidden" value="{{ i }}" name="record">
+                                <button type="submit" class="btn btn-primary">סרטונים והקלטות</button>
+                            </form>
+                            {% for j in user_cat %}
+                                {% for user_category in j.category.split(",") %}
+                                    {% if user_category in cat[i] %}
+                                        {% if j.tags != None %}
+                                            {% set tags2 = j.tags.split("|") %}
+                                            {% for usertags in tags2 %}
+                                                {% if usertags in tags[k] %}
+                                                    <form method="post" style="display: inline"
+                                                          action="{{ url_for('set_appointment.set_appointment') }}">
+                                                        <input type="hidden" name="csrf_token"
+                                                               value="{{ csrf_token() }}"/><input type="hidden"
+                                                                                                  value="{{ j.uname }}"
+                                                                                                  name="val">
+                                                        <button type="submit"
+                                                                class="btn btn-primary">{{ j.fname }} {{ j.lname }}</button>
+                                                    </form>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endif %}
 
-            {% endfor %}
-    {% endfor %}
-          </div>
-            </div>
-            {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
             {% endfor %}
           </div>
     </div>
@@ -77,27 +91,30 @@
     {% for appo in month_appo %}
     <div class="modal" id="a{{ appo.appo_date }}-{{ appo.appo_start_hour[:2] }}_{{ appo.appo_start_hour[3:]  }}">
   <div class="modal-dialog">
-    <div class="modal-content">
+      <div class="modal-content">
 
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">פגישה {{ appo.appo_date }}</h4>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
+          <!-- Modal Header -->
+          <div class="modal-header">
+              <h4 class="modal-title">פגישה {{ appo.appo_date }}</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
 
-      <!-- Modal body -->
-      <div class="modal-body" style="text-align: right">
-          <form onsubmit="formSubmit()" name="{{ appo.appo_start_hour[:2] }}_{{ appo.appo_start_hour[3:]  }}" id="{{ appo.appo_start_hour[:2] }}_{{ appo.appo_start_hour[3:]  }}" method="post" action="{{ url_for('set_appo') }}">
-              <input type="hidden" name="ap_uname" value="{{ appo.uname }}">
-              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-              <label for="ap_lect" class="form-label">מרצה</label>
-              <input type="text" name="ap_lect" class="form-control" value="{{ appo.fname }} {{ appo.lname }}" readonly>
-              <label for="ap_date" class="form-label">תאריך</label>
-              <input type="text" name="ap_date" class="form-control" value="{{ appo.appo_date }}" readonly>
-              <label for="ap_hour_st" class="form-label">שעה</label>
-              <input type="text" name="ap_hour_st" class="form-control" value="{{ appo.appo_start_hour }}" readonly>
-              <label for="ap_dur" class="form-label">משך הפגישה</label>
-              <input type="text" name="ap_dur" class="form-control" value="{{ appo.appo_dur }}" readonly>
+          <!-- Modal body -->
+          <div class="modal-body" style="text-align: right">
+              <form onsubmit="formSubmit()" name="{{ appo.appo_start_hour[:2] }}_{{ appo.appo_start_hour[3:] }}"
+                    id="{{ appo.appo_start_hour[:2] }}_{{ appo.appo_start_hour[3:] }}" method="post"
+                    action="{{ url_for('set_appointment.set_appointment') }}">
+                  <input type="hidden" name="ap_uname" value="{{ appo.uname }}">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                  <label for="ap_lect" class="form-label">מרצה</label>
+                  <input type="text" name="ap_lect" class="form-control" value="{{ appo.fname }} {{ appo.lname }}"
+                         readonly>
+                  <label for="ap_date" class="form-label">תאריך</label>
+                  <input type="text" name="ap_date" class="form-control" value="{{ appo.appo_date }}" readonly>
+                  <label for="ap_hour_st" class="form-label">שעה</label>
+                  <input type="text" name="ap_hour_st" class="form-control" value="{{ appo.appo_start_hour }}" readonly>
+                  <label for="ap_dur" class="form-label">משך הפגישה</label>
+                  <input type="text" name="ap_dur" class="form-control" value="{{ appo.appo_dur }}" readonly>
               <label for="ap_hour_end" class="form-label">שעת סיום</label>
               <input type="text" name="ap_hour_end" class="form-control" value="{{ appo.appo_end_hour }}" readonly>
               <label for="ap_loc" class="form-label">מיקום</label>

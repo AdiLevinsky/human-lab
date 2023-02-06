@@ -1,45 +1,68 @@
 {% include "adminHeader.html" %}
 {% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static',filename='css/adminpanel.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/adminpanel.css') }}">
 {% endblock %}
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-4 col-md-4 col-sm-12">
-            <button style="width:100%" onclick="select_type()" id="btn_types" class="btn btn-outline-primary">טבלת משתמשים</button>
+            <button style="width:100%" onclick="select_type()" id="btn_types" class="btn btn-outline-primary">טבלת
+                משתמשים
+            </button>
         </div>
 
         <div class="col-lg-4 col-md-4 col-sm-12">
-            <form method="post" action="{{ url_for('admin_panel') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/><input type="hidden" value="appos" name="choose"><button style="width:100%" class="btn btn-outline-primary">טבלת פגישות</button></form>
+            <form method="post" action="{{ url_for('admin_panel.admin_panel') }}"><input type="hidden" name="csrf_token"
+                                                                                         value="{{ csrf_token() }}"/><input
+                    type="hidden" value="appos" name="choose">
+                <button style="width:100%" class="btn btn-outline-primary">טבלת פגישות</button>
+            </form>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-12">
-            <form method="post" action="{{ url_for('admin_panel') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/><input type="hidden" value="records" name="choose"><button style="width:100%" class="btn btn-outline-primary">טבלת סרטונים והקלטות</button></form>
+            <form method="post" action="{{ url_for('admin_panel.admin_panel') }}"><input type="hidden" name="csrf_token"
+                                                                                         value="{{ csrf_token() }}"/><input
+                    type="hidden" value="records" name="choose">
+                <button style="width:100%" class="btn btn-outline-primary">טבלת סרטונים והקלטות</button>
+            </form>
         </div>
     </div>
     <div style="display: none;" id="types">
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-12">
-                <form method="post" action="{{ url_for('admin_panel') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/><input type="hidden" value="users" name="choose"><button type="submit" style="width: 100%;" id="user_btn" class="btn btn-outline-primary ">טבלת משתמשים</button></form>
+                <form method="post" action="{{ url_for('admin_panel.admin_panel') }}"><input type="hidden"
+                                                                                             name="csrf_token"
+                                                                                             value="{{ csrf_token() }}"/><input
+                        type="hidden" value="users" name="choose">
+                    <button type="submit" style="width: 100%;" id="user_btn" class="btn btn-outline-primary ">טבלת
+                        משתמשים
+                    </button>
+                </form>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12">
-                <form  method="post" action="{{ url_for('admin_panel') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/><input type="hidden" value="lecturers" name="choose"><button  style="width :100%;"  id="lec_btn" class="btn btn-outline-primary " >טבלת מרצים</button></form>
+                <form method="post" action="{{ url_for('admin_panel.admin_panel') }}"><input type="hidden"
+                                                                                             name="csrf_token"
+                                                                                             value="{{ csrf_token() }}"/><input
+                        type="hidden" value="lecturers" name="choose">
+                    <button style="width :100%;" id="lec_btn" class="btn btn-outline-primary ">טבלת מרצים</button>
+                </form>
             </div>
         </div>
     </div>
 
 
-{% if choose == "users"%}
-    {%   for i in table_len %}
-       <form id="form{{ i }}" name="form{{ i }}" method="post" action="{{ url_for('edit_user') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/></form>
-    {%   endfor %}
-    <div class="table-responsive" style="width: 100%;height: 100%">
-    <table id="user_st_table" class="table" >
-    <thead class="table-dark">
-        <tr>
-            <th>
-                שם משתמש
-            </th>
-            <th>
-                שם פרטי
+    {% if choose == "users" %}
+        {% for i in table_len %}
+            <form id="form{{ i }}" name="form{{ i }}" method="post" action="{{ url_for('edit_user.edit_user') }}"><input
+                    type="hidden" name="csrf_token" value="{{ csrf_token() }}"/></form>
+        {% endfor %}
+        <div class="table-responsive" style="width: 100%;height: 100%">
+            <table id="user_st_table" class="table">
+                <thead class="table-dark">
+                <tr>
+                    <th>
+                        שם משתמש
+                    </th>
+                    <th>
+                        שם פרטי
             </th>
             <th>
                 שם משפחה
@@ -61,27 +84,30 @@
                 <td>{{ st_table[i].fname }}<input type="hidden" name="fname" form="form{{ i }}" value="{{ st_table[i].fname }}" readonly></td>
                 <td>{{ st_table[i].lname }}<input type="hidden" form="form{{ i }}" name="lname" value="{{ st_table[i].lname }}" readonly></td>
                 <td>{{ st_table[i].password }}<input type="hidden" form="form{{ i }}" name="password" value="{{ st_table[i].password }}" readonly></td>
-                <td><input type="submit" form="form{{ i }}" name="action2" value="מחק" class="btn-danger btn" style="width: 100%"></td>
+                <td><input type="submit" form="form{{ i }}" name="action2" value="מחק" class="btn-danger btn"
+                           style="width: 100%"></td>
                 <td><input type="submit" form="form{{ i }}" class="btn btn-primary" value="ערוך משתמש זה"></td>
             </tr>
 
-        {%  endfor %}
-    </table>
-    </div>
-{% endif %}
-{% if choose=="lecturers" %}
-    {%   for i in table_len %}
-       <form id="form{{ i }}" name="form{{ i }}" method="post" action="{{ url_for('edit_lect') }}" ><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/></form>
-    {%   endfor %}
-    <div class="table-responsive">
-    <table id="user_lect_table" class="table" style="text-align: center">
-    <thead class="table-dark">
-    <tr>
-       <th>
-            שם משתמש
-       </th>
-        <th>
-            שם פרטי
+        {% endfor %}
+            </table>
+        </div>
+    {% endif %}
+    {% if choose=="lecturers" %}
+        {% for i in table_len %}
+            <form id="form{{ i }}" name="form{{ i }}" method="post"
+                  action="{{ url_for('edit_lecturer.edit_lecturer') }}"><input type="hidden" name="csrf_token"
+                                                                               value="{{ csrf_token() }}"/></form>
+        {% endfor %}
+        <div class="table-responsive">
+            <table id="user_lect_table" class="table" style="text-align: center">
+                <thead class="table-dark">
+                <tr>
+                    <th>
+                        שם משתמש
+                    </th>
+                    <th>
+                        שם פרטי
         </th>
         <th>
             שם משפחה
@@ -111,32 +137,37 @@
                 <td>{{ st_table[i].desc }}<input type="hidden" form="form{{ i }}" style="width: 100%" name="desc" value="{{ st_table[i].desc }}" readonly></td>
                 <td><input type="hidden" form="form{{ i }}" style="width: 100%" name="image" value="{{ st_table[i].image }}" readonly><img src="static/uploads/{{ st_table[i].image }}" style="object-fit: fill" width="150"></td>
                 <td><input type="submit" form="form{{ i }}" name="action2" value="מחק" class="btn-danger btn" style="width: 100%"></td>
-                <td><input type="submit" form="form{{ i }}" style="width: 100%" class="btn btn-primary" value="ערוך משתמש זה"></td>
+                <td><input type="submit" form="form{{ i }}" style="width: 100%" class="btn btn-primary"
+                           value="ערוך משתמש זה"></td>
             </tr>
 
-        {%  endfor %}
-</tbody>
-    </table>
-    </div>
-{% endif %}
-{% if choose=="appos" %}
-{%   for i in table_len %}
-       <form id="form{{ i }}" name="form{{ i }}" method="post" action="{{ url_for('edit_appo') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/></form>
-    {%   endfor %}
-    <div class="row">
-        <div class="col-lg-8 col-md-8 col-sm-0"></div>
-    <div class="col-lg-4 col-md-4 col-sm-12">
-    <form action="{{ url_for('admin_panel') }}" method="post">
-<div class="input-group">
-    <input type="hidden" value="appos" name="choose">
-    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-  <input type="search" class="form-control rounded float-end" placeholder="חפש" aria-label="Search" name="search1" aria-describedby="search-addon" />
-  <button type="submit" class="btn btn-primary">
-    <!--<i class="fas fa-search"></i>-->
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-</svg>
-  </button>
+    {% endfor %}
+    </tbody>
+            </table>
+        </div>
+    {% endif %}
+    {% if choose=="appos" %}
+        {% for i in table_len %}
+            <form id="form{{ i }}" name="form{{ i }}" method="post"
+                  action="{{ url_for('edit_appointment.edit_appointment') }}"><input type="hidden" name="csrf_token"
+                                                                                     value="{{ csrf_token() }}"/></form>
+        {% endfor %}
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-0"></div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <form action="{{ url_for('admin_panel.admin_panel') }}" method="post">
+                    <div class="input-group">
+                        <input type="hidden" value="appos" name="choose">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <input type="search" class="form-control rounded float-end" placeholder="חפש"
+                               aria-label="Search" name="search1" aria-describedby="search-addon"/>
+                        <button type="submit" class="btn btn-primary">
+                            <!--<i class="fas fa-search"></i>-->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-search" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                            </svg>
+                        </button>
 </div>
     </form>
     </div>
@@ -216,51 +247,57 @@
                 <td>
                     {{ appo_user[i].appo_limit }}
                 <input type="hidden" form="form{{ i }}" name="ap_limit" class="form-control" value="{{ appo_user[i].appo_limit }}" readonly>
-            </td>
+                </td>
                 {% if appo_user[i].appo_user_aproved %}
-                <td>
-                    {% for j in range(0,appo_user[i].appo_user_aproved[-1]) %}
-                        {% if appo_user[i].appo_user_aproved[j].split(" ")[3] %}
-                        {% set user_name = " ".join(appo_user[i].appo_user_aproved[j].split(" ")[0:2])+ "\n " +appo_user[i].appo_user_aproved[j].split(" ")[3] %}
-                        {% set user_name = user_name.replace("_"," ") %}
-                        {% else %}
-                        {% set user_name = " ".join(appo_user[i].appo_user_aproved[j].split(" ")[0:2]) %}
-                        {% endif %}
-                        <form action="{{ url_for('admin_panel') }}" method="post"> <textarea  name="user_name" style="text-align: right"  readonly>{{ user_name }}</textarea>
-                            <div class="input-group">
-                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                                <input type="hidden"  name="lect_name" value="{{ appo_user[i].uname }}">
-                                <input type="hidden" value="{{ appo_user[i].appo_date }}" name="ap_date">
-                                <input type="hidden" name="ap_hour_st"  value="{{ appo_user[i].appo_start_hour }}" >
-                                <input type="hidden" name="del_user" value="{{ appo_user[i].appo_user_aproved[j] }}" readonly>
-                            <input type="submit" class="form-control" name="action" value="מחק" />
-                            </div>
-                        </form>
-                    {% endfor %}
+                    <td>
+                        {% for j in range(0,appo_user[i].appo_user_aproved[-1]) %}
+                            {% if appo_user[i].appo_user_aproved[j].split(" ")[3] %}
+                                {% set user_name = " ".join(appo_user[i].appo_user_aproved[j].split(" ")[0:2])+ "\n " +appo_user[i].appo_user_aproved[j].split(" ")[3] %}
+                                {% set user_name = user_name.replace("_"," ") %}
+                            {% else %}
+                                {% set user_name = " ".join(appo_user[i].appo_user_aproved[j].split(" ")[0:2]) %}
+                            {% endif %}
+                            <form action="{{ url_for('admin_panel.admin_panel') }}" method="post"><textarea
+                                    name="user_name" style="text-align: right" readonly>{{ user_name }}</textarea>
+                                <div class="input-group">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                    <input type="hidden" name="lect_name" value="{{ appo_user[i].uname }}">
+                                    <input type="hidden" value="{{ appo_user[i].appo_date }}" name="ap_date">
+                                    <input type="hidden" name="ap_hour_st" value="{{ appo_user[i].appo_start_hour }}">
+                                    <input type="hidden" name="del_user" value="{{ appo_user[i].appo_user_aproved[j] }}"
+                                           readonly>
+                                    <input type="submit" class="form-control" name="action" value="מחק"/>
+                                </div>
+                            </form>
+                        {% endfor %}
             </td>
             {% else %}
             <td>אין</td>
-            {% endif %}
-            {% if appo_user[i].appo_user_wait %}
-                <td>
-                    {% for j in range(0,appo_user[i].appo_user_wait[-1]) %}
-                        {% if appo_user[i].appo_user_wait[j].split(" ")[3] %}
-                        {% set user_name = " ".join(appo_user[i].appo_user_wait[j].split(" ")[0:2])+ "\n " +appo_user[i].appo_user_wait[j].split(" ")[3] %}
-                        {% set user_name = user_name.replace("_"," ") %}
-                        {% else %}
-                        {% set user_name = " ".join(appo_user[i].appo_user_wait[j].split(" ")[0:2]) %}
-                        {% endif %}
-                        <form action="{{ url_for('admin_panel') }}" method="post"> <textarea type="text" name="user_name" style="text-align: right" readonly>{{ user_name }}</textarea>
-                            <div class="input-group">
-                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                                <input type="hidden"  name="lect_name" value="{{ appo_user[i].uname }}">
-                                <input type="hidden" value="{{ appo_user[i].appo_date }}" name="ap_date">
-                                <input type="hidden" name="ap_hour_st"  value="{{ appo_user[i].appo_start_hour }}" >
-                                <input type="hidden" name="add_user" value="{{ appo_user[i].appo_user_wait[j] }}" readonly>
-                            <input type="submit" class="form-control" name="action" value="דחייה" />
-                            <input type="submit" class="form-control" name="action" value="אישור" />
-                            </div>
-                        </form>
+                {% endif %}
+                {% if appo_user[i].appo_user_wait %}
+                    <td>
+                        {% for j in range(0,appo_user[i].appo_user_wait[-1]) %}
+                            {% if appo_user[i].appo_user_wait[j].split(" ")[3] %}
+                                {% set user_name = " ".join(appo_user[i].appo_user_wait[j].split(" ")[0:2])+ "\n " +appo_user[i].appo_user_wait[j].split(" ")[3] %}
+                                {% set user_name = user_name.replace("_"," ") %}
+                            {% else %}
+                                {% set user_name = " ".join(appo_user[i].appo_user_wait[j].split(" ")[0:2]) %}
+                            {% endif %}
+                            <form action="{{ url_for('admin_panel.admin_panel') }}" method="post"><textarea type="text"
+                                                                                                            name="user_name"
+                                                                                                            style="text-align: right"
+                                                                                                            readonly>{{ user_name }}</textarea>
+                                <div class="input-group">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                    <input type="hidden" name="lect_name" value="{{ appo_user[i].uname }}">
+                                    <input type="hidden" value="{{ appo_user[i].appo_date }}" name="ap_date">
+                                    <input type="hidden" name="ap_hour_st" value="{{ appo_user[i].appo_start_hour }}">
+                                    <input type="hidden" name="add_user" value="{{ appo_user[i].appo_user_wait[j] }}"
+                                           readonly>
+                                    <input type="submit" class="form-control" name="action" value="דחייה"/>
+                                    <input type="submit" class="form-control" name="action" value="אישור"/>
+                                </div>
+                            </form>
                     {% endfor %}
             </td>
             {% else %}
@@ -272,24 +309,25 @@
             </tr>
 
 
-        {%  endfor %}
+        {% endfor %}
     </table>
-    </div>
-{% endif %}
+</div>
+    {% endif %}
 
-{% if choose=="records" %}
-    {%   for i in table_len %}
-       <form id="form{{ i }}" name="form{{ i }}" method="post" action="{{ url_for('edit_rec') }}" ><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/></form>
-    {%   endfor %}
-    <div class="table-responsive">
-    <table id="user_lect_table" class="table" style="text-align: center">
-    <thead class="table-dark">
-    <tr>
-       <th>
-            קטגוריה
-       </th>
-        <th>
-            תת קטגוריה
+    {% if choose=="records" %}
+        {% for i in table_len %}
+            <form id="form{{ i }}" name="form{{ i }}" method="post" action="{{ url_for('edit_record.edit_record') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/></form>
+        {% endfor %}
+        <div class="table-responsive">
+            <table id="user_lect_table" class="table" style="text-align: center">
+                <thead class="table-dark">
+                <tr>
+                    <th>
+                        קטגוריה
+                    </th>
+                    <th>
+                        תת קטגוריה
         </th>
         <th>
             כותרת

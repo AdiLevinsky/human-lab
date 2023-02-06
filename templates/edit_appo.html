@@ -1,30 +1,33 @@
 {% if current_user.id == 1 %}
-{% include "adminHeader.html" %}
+    {% include "adminHeader.html" %}
 {% else %}
     {% include "lect_header.html" %}
 {% endif %}
 <div class="container mt-3">
-<div class="row">
-    <div class="col-lg-3 col-md-3 col-sm-12">
-        {% if current_user.id == 1 %}
-            <iframe src="{{ url_for('admin_panel' ) }}" style="width: 100%;height: 100%;margin-top: 10px;"></iframe>
-{% else %}
-        <iframe src="{{ url_for('lecturer_panel') }}" style="width: 100%;height: 100%;margin-top: 10px;"></iframe>
-        {% endif %}
-    </div>
-<div class="col-lg-9 col-md-9 col-sm-12">
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-12">
+            {% if current_user.id == 1 %}
+                <iframe src="{{ url_for('admin_panel.admin_panel' ) }}"
+                        style="width: 100%;height: 100%;margin-top: 10px;"></iframe>
+            {% else %}
+                <iframe src="{{ url_for('lecturer_panel.lecturer_panel') }}"
+                        style="width: 100%;height: 100%;margin-top: 10px;"></iframe>
+            {% endif %}
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12">
 
-      <form method="post" action="{{ url_for('edit_appo') }}"  id="log-form">
-      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-      <input type="hidden"  name="id" value="{{ ap_id }}">
-      <input type="hidden"  name="lect" value="{{ lect }}">
-          <label for="ap_date1" class="form-label">תאריך</label>
-          <input type="date" name="ap_date1" value="{{ ap_date }}" class="form-control" readonly>
-          <label for="ap_hour_st1" class="form-label">שעה</label>
-          <input type="time" name="ap_hour_st1" value="{{ ap_hour_st }}" class="form-control" min="08:30" max="23:59">
-          <label for="ap_dur1" class="form-label"> משך הפגישה בדקות</label>
-          <input type="number" name="ap_dur1" value="{{ ap_dur }}" class="form-control" min="1">
-          <label for="ap_loc1" class="form-label">מיקום</label>
+            <form method="post" action="{{ url_for('edit_appointment.edit_appointment') }}" id="log-form">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                <input type="hidden" name="id" value="{{ ap_id }}">
+                <input type="hidden" name="lect" value="{{ lect }}">
+                <label for="ap_date1" class="form-label">תאריך</label>
+                <input type="date" name="ap_date1" value="{{ ap_date }}" class="form-control" readonly>
+                <label for="ap_hour_st1" class="form-label">שעה</label>
+                <input type="time" name="ap_hour_st1" value="{{ ap_hour_st }}" class="form-control" min="08:30"
+                       max="23:59">
+                <label for="ap_dur1" class="form-label"> משך הפגישה בדקות</label>
+                <input type="number" name="ap_dur1" value="{{ ap_dur }}" class="form-control" min="1">
+                <label for="ap_loc1" class="form-label">מיקום</label>
           <input type="text" name="ap_loc1" class="form-control" value="{{ ap_loc }}">
           <label for="appo_type1" class="form-label">סוג:</label>
           <select class="form-select" name="appo_type1" id="appo_type1">

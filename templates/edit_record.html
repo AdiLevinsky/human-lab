@@ -1,24 +1,23 @@
 <style>
-     ul
-     {
-         list-style-type: none;
-     }
+    ul {
+        list-style-type: none;
+    }
 </style>
 {% include "adminHeader.html" %}
 <div class="container mt-3">
 
 
-
-      <form method="post" action="{{ url_for('edit_rec') }}" style="text-align: right">
-      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-      <input type="hidden" name="id1" value="{{ rec_id1 }}">
-            <div class="form-group">
-          <label for="category" class="form-label">קטגוריה</label>
+    <form method="post" action="{{ url_for('edit_record.edit_record') }}" style="text-align: right">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <input type="hidden" name="id1" value="{{ rec_id1 }}">
+        <div class="form-group">
+            <label for="category" class="form-label">קטגוריה</label>
             <ul id="category" class="form-control">
-            {% for i in category_len %}
-            <li><input type="checkbox" id="category-{{ i }}" name="{{ category[i] }}" value="{{ category[i] }}" onclick="add_tags('category-{{ i }}','{{ category[i] }}')">
-                <label for="category-{{ i }}">{{ category[i] }}</label></li>
-            {% endfor %}
+                {% for i in category_len %}
+                    <li><input type="checkbox" id="category-{{ i }}" name="{{ category[i] }}" value="{{ category[i] }}"
+                               onclick="add_tags('category-{{ i }}','{{ category[i] }}')">
+                        <label for="category-{{ i }}">{{ category[i] }}</label></li>
+                {% endfor %}
             </ul>
            </div>
             <div class="form-group">

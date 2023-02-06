@@ -1,15 +1,18 @@
-from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField,SelectMultipleField,FileField,DateField,TimeField,SelectField,IntegerField,widgets
-from wtforms.validators import DataRequired
-from flask_wtf.file import FileAllowed, FileRequired
 from datetime import datetime
+
+from flask_wtf import FlaskForm
+from flask_wtf.file import FileAllowed
+from wtforms import StringField, SubmitField, PasswordField, SelectMultipleField, FileField, DateField, TimeField, \
+    SelectField, IntegerField, widgets
+from wtforms.validators import DataRequired
+
 
 class LoginForm(FlaskForm):
     uname = StringField("שם משתמש", validators=[DataRequired()])
     password = PasswordField("סיסמה", validators=[DataRequired()])
     submit = SubmitField("כניסה")
 
-class add_studnet(FlaskForm):
+class add_student(FlaskForm):
     uname = StringField("שם משתמש", validators=[DataRequired()])
     fname = StringField("שם פרטי", validators=[DataRequired()])
     lname = StringField("שם משפחה", validators=[DataRequired()])

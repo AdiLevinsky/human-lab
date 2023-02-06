@@ -2,18 +2,18 @@
 <div class="container mt-3">
 
 
-
-      <form method="post" action="{{ url_for('admin_profile') }}" style="text-align: right" onsubmit="return check_strong_password()">
-          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-          <label for="uname1" class="form-label">שם משתמש</label>
-          <input type="text" name="uname1" value="admin" class="form-control" readonly>
-          <label for="fname1" class="form-label">שם פרטי</label>
-          <input type="text" name="fname1" value="admin" class="form-control" readonly>
-          <label for="lname1" class="form-label">שם משפחה</label>
-          <input type="text" name="lname1" value="admin" class="form-control" readonly>
-          <label for="password1" class="form-label">סיסמה</label>
-          <input type="text" name="password1" class="form-control">
-          <input type="submit" value="שנה" style="width:100%" class="btn-primary">
+    <form method="post" action="{{ url_for('admin_profile.admin_profile') }}" style="text-align: right"
+          onsubmit="return check_strong_password()">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <label for="uname1" class="form-label">שם משתמש</label>
+        <input type="text" name="uname1" value="admin" class="form-control" readonly>
+        <label for="fname1" class="form-label">שם פרטי</label>
+        <input type="text" name="fname1" value="admin" class="form-control" readonly>
+        <label for="lname1" class="form-label">שם משפחה</label>
+        <input type="text" name="lname1" value="admin" class="form-control" readonly>
+        <label for="password1" class="form-label">סיסמה</label>
+        <input type="text" name="password1" class="form-control">
+        <input type="submit" value="שנה" style="width:100%" class="btn-primary">
           </form>
 
     </div>

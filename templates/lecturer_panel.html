@@ -3,12 +3,13 @@
 {% else %}
     {% include "lect_header.html" %}
 {% endif %}
-{%   for i in table_len %}
-       <form id="form{{ i }}" name="form{{ i }}" method="post" action="{{ url_for('edit_appo') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/></form>
-    {%   endfor %}
+{% for i in table_len %}
+    <form id="form{{ i }}" name="form{{ i }}" method="post" action="{{ url_for('edit_appointment.edit_appointment') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/></form>
+{% endfor %}
 <div class="table-responsive">
     <table id="appo_table" class="table" style="text-align: center">
-    <thead class="table-dark">
+        <thead class="table-dark">
         <tr>
             <th>
                 תאריך

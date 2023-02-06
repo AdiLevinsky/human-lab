@@ -1,25 +1,24 @@
 <style>
-     ul
-     {
-         list-style-type: none;
-     }
+    ul {
+        list-style-type: none;
+    }
 </style>
 {% include "adminHeader.html" %}
 <div class="container mt-3">
 
 
-
-      <form method="post" action="{{ url_for('edit_lect') }}" style="text-align: right" enctype="multipart/form-data" onsubmit="return check_strong_password()">
-      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-          <label for="uname1" class="form-label">שם משתמש</label>
-          <input type="text" name="uname1" value="{{ uname }}" class="form-control" readonly>
-          <label for="fname1" class="form-label">שם פרטי</label>
-          <input type="text" name="fname1" value="{{ fname }}" class="form-control">
-          <label for="lname1" class="form-label">שם משפחה</label>
-          <input type="text" name="lname1" value="{{ lname }}" class="form-control">
-          <label for="password1" class="form-label">סיסמה</label>
-          <input type="text" name="password1" class="form-control">
-            <div class="form-group">
+    <form method="post" action="{{ url_for('edit_lecturer.edit_lecturer') }}" style="text-align: right"
+          enctype="multipart/form-data" onsubmit="return check_strong_password()">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <label for="uname1" class="form-label">שם משתמש</label>
+        <input type="text" name="uname1" value="{{ uname }}" class="form-control" readonly>
+        <label for="fname1" class="form-label">שם פרטי</label>
+        <input type="text" name="fname1" value="{{ fname }}" class="form-control">
+        <label for="lname1" class="form-label">שם משפחה</label>
+        <input type="text" name="lname1" value="{{ lname }}" class="form-control">
+        <label for="password1" class="form-label">סיסמה</label>
+        <input type="text" name="password1" class="form-control">
+        <div class="form-group">
           <label for="category" class="form-label">קטגוריה</label>
             <ul id="category" class="form-control">
             {% for i in category_len %}
