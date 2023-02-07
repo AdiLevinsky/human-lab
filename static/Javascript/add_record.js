@@ -24,11 +24,11 @@ function add_tags(id,value){
     if($('#'+id).is(':checked')){
         $('#tags').css('display','block')
         $('#tags').parent().find("label")[0].style.display = "block"
-        $("input[type='checkbox'][value^="+value+"]").parent().css({"display":"block"})
+        $("input[type='checkbox'][value^='" + value + "']").parent().css({"display": "block"})
     }
-    else{
-       $("input[type='checkbox'][value^="+value+"_]").parent().css({"display":"none"})
-        $("input[type='checkbox'][value^="+value+"_]").prop('checked',false)
+    else {
+        $("input[type='checkbox'][value^='" + value + "_']").parent().css({"display": "none"})
+        $("input[type='checkbox'][value^='" + value + "_']").prop('checked', false)
     }
 
 }

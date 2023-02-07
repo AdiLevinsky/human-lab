@@ -77,10 +77,10 @@
     </div>
 
     </div>
-  </div>
+</div>
 <script>
-    function check_strong_password(){
-        if document.getElementsByName("password1")[0].value != ""{
+    function check_strong_password() {
+        if (document.getElementsByName("password1")[0].value != "") {
             if (document.getElementsByName("password1")[0].value.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/)) {
                 return true;
             } else {

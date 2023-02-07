@@ -12,7 +12,8 @@ from web import login, logout, admin_panel, admin_profile, add_student, edit_use
 # Configuration do not touch
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'  # important to change in production !!!!
+
 app.config['UPLOAD_FOLDER'] = 'static/uploads/'
 Bootstrap(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///school.db'
@@ -27,15 +28,15 @@ app.config.update(
 
 )
 csrf = CSRFProtect(app)
-login_manager.refresh_view = "login"
+login_manager.refresh_view = "login.login"
 login_manager.needs_refresh_message = (
     u"To protect your account, please reauthenticate to access this page."
 )
 login_manager.needs_refresh_message_category = "info"
 # app.config.update(WTF_CSRF_CHECK_DEFAULT=False)
 defualt_content_policy = "default-src 'self'; img-src 'self' data: "
-js_content_policy = " script-src 'unsafe-inline'  http://127.0.0.1:5000/static/vendor/jquery/jquery-3.6.0.min.js http://127.0.0.1:5000/static/vendor/bootstrap-5.1.3-dist/js/bootstrap.bundle.min.js "
-css_content_policy = " style-src https: 'unsafe-inline'  http://127.0.0.1:5000/static/vendor/bootstrap-5.1.3-dist/css/bootstrap.min.css "
+js_content_policy = " script-src 'self' 'unsafe-inline' "
+css_content_policy = " style-src https: 'self' 'unsafe-inline' "
 
 
 # todo אפשרות חיפוש זה אופצינאלי
@@ -103,6 +104,7 @@ class Record(db.Model):
     tags = db.Column(db.Text)
 
 
+# ------------ to create the tables ------------
 # with app.app_context():
 #     db.create_all()
 #     admin = User(uname="admin",fname="admin",lname="admin",password=generate_password_hash("SyZueCyg)MJUw@9=",method='pbkdf2:sha256',salt_length=8),role="admin",category="aaa")

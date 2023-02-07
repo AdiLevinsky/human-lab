@@ -48,7 +48,7 @@ def login():  # put application's code here
         # response = make_response(render_template(url_for('templates',filename='index.html'), form=form))
         response = make_response(render_template('index.html', form=form))
         response.headers[
-            'Content-Security-Policy'] = app.defualt_content_policy + ";" + app.js_content_policy + ";" + app.css_content_policy + "http://127.0.0.1:5000/static/css/index.css;"
+            'Content-Security-Policy'] = app.defualt_content_policy + ";" + app.js_content_policy + ";" + app.css_content_policy + ";"
         return response
     else:  # if the use log in
         if current_user.role == "admin":

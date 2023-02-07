@@ -114,7 +114,7 @@ def edit_appointment():
                                                          ap_loc=request.form["ap_loc"], appo_msg=request.form["msgs"],
                                                          current_user=current_user))
                 response.headers[
-                    'Content-Security-Policy'] = app.defualt_content_policy + ";" + app.js_content_policy + ";" + app.css_content_policy + " http://127.0.0.1:5000/static/css/send_msg.css "
+                    'Content-Security-Policy'] = app.defualt_content_policy + ";" + app.js_content_policy + ";" + app.css_content_policy + ";"
                 return response
             elif request.form["action2"] == "מחק":  # delete appointment
                 if "lect_name" in request.form and current_user.id == 1:

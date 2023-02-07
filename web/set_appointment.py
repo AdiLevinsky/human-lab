@@ -44,7 +44,7 @@ def set_appointment():  # main
                             record_cat=record_cat, cat=catgories, user_cat=user_cat, tags=tags,
                             len_cat=range(len(catgories)), ))
         response.headers[
-            'Content-Security-Policy'] = app.defualt_content_policy + ";" + app.js_content_policy + ";" + app.css_content_policy + "http://127.0.0.1:5000/static/css/main.css"
+            'Content-Security-Policy'] = app.defualt_content_policy + ";" + app.js_content_policy + ";" + app.css_content_policy + ";"
         return response
     if request.method == "POST" and "ap_date" in request.form:  # if the user order appointment
         add_user_to_appo = app.Appointment.query.filter_by(uname=request.form["ap_uname"],
@@ -57,13 +57,13 @@ def set_appointment():  # main
                 response = make_response(
                     render_template("main.html", cat=catgories, user_cat=user_cat, tags=tags, found=""))
                 response.headers[
-                    'Content-Security-Policy'] = app.defualt_content_policy + ";" + app.js_content_policy + ";" + app.css_content_policy + "http://127.0.0.1:5000/static/css/main.css"
+                    'Content-Security-Policy'] = app.defualt_content_policy + ";" + app.js_content_policy + ";" + app.css_content_policy + ";"
                 return response
 
         if add_user_to_appo.appo_user_wait:
             add_user_to_appo.appo_user_wait = add_user_to_appo.appo_user_wait + "\n" + current_user.fname + " " + current_user.lname + " " + current_user.uname + " " + htmlentities.encode(
                 request.form["ap_com"])  # if the appo_user_wait already have users
-        else:
+        else:  # if this is the first user
             add_user_to_appo.appo_user_wait = "\n" + current_user.fname + " " + current_user.lname + " " + current_user.uname + " " + \
                                               htmlentities.encode(request.form["ap_com"])  # if this is the first uder
         app.db.session.commit()
@@ -71,7 +71,7 @@ def set_appointment():  # main
             render_template("main.html", len_tags=range(len(tags)), cat=catgories, user_cat=user_cat,
                             len_cat=range(len(catgories)), tags=tags, found="", records=""))
         response.headers[
-            'Content-Security-Policy'] = app.defualt_content_policy + ";" + app.js_content_policy + ";" + app.css_content_policy + "http://127.0.0.1:5000/static/css/main.css"
+            'Content-Security-Policy'] = app.defualt_content_policy + ";" + app.js_content_policy + ";" + app.css_content_policy + ";"
         return response
     elif request.method == "POST":
         d = datetime.datetime.now()
@@ -112,7 +112,7 @@ def set_appointment():  # main
                         else:
                             hour_lst_string = functions.main_page.green(check_appo)  # if the meeting isnt full
                     elif check_appo.appo_user_wait:  # if the users wait for approve is full
-                        if len(check_appo.appo_user_wait.split("\n")) == check_appo.appo_limit:
+                        if len(check_appo.appo_user_wait.split("\n")) == check_appo.appo_limit + 1:
                             hour_lst_string += functions.main_page.yellow(check_appo)
                         else:  # if the meeting isnt full
                             hour_lst_string = functions.main_page.green(check_appo)
@@ -120,6 +120,7 @@ def set_appointment():  # main
                         hour_lst_string += functions.main_page.green(check_appo)
                     if tmp_date not in tmp_lst:  # add the date to tmp_lst
                         tmp_lst.append(tmp_date)
+
                 elif tmp_date[1] in cal[i] and check_appo.appo_date.split("-")[2][0] == "0":
                     # in case the date is 1,2,3,4,5,6,7,8,9 becuase the dates save as 01,02,03...⬆
                     if check_appo.appo_user_aproved:
@@ -162,12 +163,12 @@ def set_appointment():  # main
                             caln=cal.replace('<td ', '<td  width="150" height="150"'),
                             month_appo=month_appo))
         response.headers[
-            'Content-Security-Policy'] = app.defualt_content_policy + ";" + app.js_content_policy + ";" + app.css_content_policy + "http://127.0.0.1:5000/static/css/main.css"
+            'Content-Security-Policy'] = app.defualt_content_policy + ";" + app.js_content_policy + ";" + app.css_content_policy + ";"
         return response
 
     response = make_response(
         render_template("main.html", len_tags=range(len(tags)), cat=catgories, user_cat=user_cat, tags=tags,
                         len_cat=range(len(catgories)), found="", records=""))
     response.headers[
-        'Content-Security-Policy'] = app.defualt_content_policy + ";" + app.js_content_policy + ";" + app.css_content_policy + "http://127.0.0.1:5000/static/css/main.css"
+        'Content-Security-Policy'] = app.defualt_content_policy + ";" + app.js_content_policy + ";" + app.css_content_policy + ";"
     return response

@@ -252,7 +252,7 @@
                     <td>
                         {% for j in range(0,appo_user[i].appo_user_aproved[-1]) %}
                             {% if appo_user[i].appo_user_aproved[j].split(" ")[3] %}
-                                {% set user_name = " ".join(appo_user[i].appo_user_aproved[j].split(" ")[0:2])+ "\n " +appo_user[i].appo_user_aproved[j].split(" ")[3] %}
+                                {% set user_name = " ".join(appo_user[i].appo_user_aproved[j].split(" ")[0:2])+ "\n " +appo_user[i].appo_user_aproved[j].split(" ")[-1] %}
                                 {% set user_name = user_name.replace("_"," ") %}
                             {% else %}
                                 {% set user_name = " ".join(appo_user[i].appo_user_aproved[j].split(" ")[0:2]) %}
@@ -278,7 +278,7 @@
                     <td>
                         {% for j in range(0,appo_user[i].appo_user_wait[-1]) %}
                             {% if appo_user[i].appo_user_wait[j].split(" ")[3] %}
-                                {% set user_name = " ".join(appo_user[i].appo_user_wait[j].split(" ")[0:2])+ "\n " +appo_user[i].appo_user_wait[j].split(" ")[3] %}
+                                {% set user_name = " ".join(appo_user[i].appo_user_wait[j].split(" ")[0:2])+ "\n " +appo_user[i].appo_user_wait[j].split(" ")[-1] %}
                                 {% set user_name = user_name.replace("_"," ") %}
                             {% else %}
                                 {% set user_name = " ".join(appo_user[i].appo_user_wait[j].split(" ")[0:2]) %}

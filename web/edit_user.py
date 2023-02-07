@@ -33,8 +33,9 @@ def edit_user():
                 response = make_response(
                     render_template("edit_user.html", uname=request.form["uname"], fname=request.form["fname"],
                                     lname=request.form["lname"]))
+
                 response.headers[
-                    'Content-Security-Policy'] = app.defualt_content_policy + ";" + app.js_content_policy + "http://127.0.0.1:5000/static/Javascript/adminpanel.js ;" + app.css_content_policy + "http://127.0.0.1:5000/static/css/adminpanel.css"
+                    'Content-Security-Policy'] = app.defualt_content_policy + ";" + app.js_content_policy + ";" + app.css_content_policy + ";"
                 return response
     else:
         return abort(403)

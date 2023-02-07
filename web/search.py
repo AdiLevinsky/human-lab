@@ -13,5 +13,5 @@ def search():
     result = app.User.query.filter(app.User.tags.contains(request.form["tag"])).all()
     response = make_response(render_template("search.html", lecturers=result))
     response.headers[
-        'Content-Security-Policy'] = app.defualt_content_policy + ";" + app.js_content_policy + ";" + app.css_content_policy + "http://127.0.0.1:5000/static/css/main.css" + ";"
+        'Content-Security-Policy'] = app.defualt_content_policy + ";" + app.js_content_policy + ";" + app.css_content_policy + ";"
     return response

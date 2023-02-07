@@ -25,7 +25,7 @@ def add_student():
             )
             # add to database
             new_user = app.User(
-                uname=form.uname.data,
+                uname=form.uname.data.strip(),
                 fname=form.fname.data,
                 lname=form.lname.data,
                 password=hash_and_salted_password,
@@ -35,8 +35,9 @@ def add_student():
             app.db.session.commit()
             return redirect(url_for("admin_panel.admin_panel"))
         response = make_response(render_template("addStudent.html", form=form))
+
         response.headers[
-            'Content-Security-Policy'] = app.defualt_content_policy + ";" + app.js_content_policy + ";" + app.css_content_policy + "http://127.0.0.1:5000/static/css/add_stud.css"
+            'Content-Security-Policy'] = app.defualt_content_policy + ";" + app.js_content_policy + ";" + app.css_content_policy + ";"
         return response
 
     else:

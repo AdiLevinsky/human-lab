@@ -5,42 +5,44 @@
 {% endif %}
 <link rel="stylesheet" href="/static/css/main.css">
 <div class="container-fluid">
-  <h1 style="text-align: center">קטגוריות</h1>
-  <ul class="nav nav-tabs" role="tablist">
-      {% for i in cat %}
-  <li class="nav-item" role="presentation">
-    <a class="nav-link" data-bs-toggle="tab" href="#{{ i }}">{{ i }}</a>
-  </li>
-      {% endfor %}
-</ul>
-  <div class="tab-content">
-      {% for i in len_cat %}
-    <div id="{{ cat[i] }}" class=" tab-pane fade">
-    <div class="tabbable">
-          <ul class="nav nav-tabs" >
-        {% for k in len_tags %}
-            {% if tags[k].split('_')[0] == cat[i] %}
-                {%  set tag = tags[k].split('_')[1]%}
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" href="#{{ cat[i] }}{{ k }}">{{ tag }}</a>
-                    </li>
-            {% endif %}
+    <h1 style="text-align: center">קטגוריות</h1>
+    <ul class="nav nav-tabs" role="tablist">
+        {% for i in cat %}
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" data-bs-toggle="tab" href="#{{ i|replace(' ','-') }}">{{ i }}</a>
+            </li>
         {% endfor %}
-          </ul>
-        <div class="tab-content">
-            {% for k in len_tags %}
-                {% if tags[k].split('_')[0] == cat[i] %}
-                    <div id="{{ cat[i] }}{{ k }}" class="tab tab-pane fade">
-                        <div class="bp3-overflow-list">
-                            <form method="post" style="display: inline"
-                                  action="{{ url_for('set_appointment.set_appointment') }}"><input type="hidden"
-                                                                                                   name="csrf_token"
-                                                                                                   value="{{ csrf_token() }}"/><input
-                                    type="hidden" value="{{ i }}" name="record">
-                                <button type="submit" class="btn btn-primary">סרטונים והקלטות</button>
-                            </form>
-                            {% for j in user_cat %}
-                                {% for user_category in j.category.split(",") %}
+    </ul>
+    <div class="tab-content">
+        {% for i in len_cat %}
+            <div id="{{ cat[i]|replace(' ','-') }}" class=" tab-pane fade">
+                <div class="tabbable">
+                    <ul class="nav nav-tabs">
+                        {% for k in len_tags %}
+                            {% if tags[k].split('_')[0] == cat[i] %}
+                                {% set tag = tags[k].split('_')[1] %}
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="tab"
+                                       href="#{{ cat[i]|replace(' ','-') }}{{ k }}">{{ tag }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                    <div class="tab-content">
+                        {% for k in len_tags %}
+                            {% if tags[k].split('_')[0] == cat[i] %}
+                                <div id="{{ cat[i]|replace(' ','-') }}{{ k }}" class="tab tab-pane fade">
+                                    <div class="bp3-overflow-list">
+                                        <form method="post" style="display: inline"
+                                              action="{{ url_for('set_appointment.set_appointment') }}"><input
+                                                type="hidden"
+                                                name="csrf_token"
+                                                value="{{ csrf_token() }}"/><input
+                                                type="hidden" value="{{ i }}" name="record">
+                                            <button type="submit" class="btn btn-primary">סרטונים והקלטות</button>
+                                        </form>
+                                        {% for j in user_cat %}
+                                            {% for user_category in j.category.split(",") %}
                                     {% if user_category in cat[i] %}
                                         {% if j.tags != None %}
                                             {% set tags2 = j.tags.split("|") %}
@@ -156,13 +158,14 @@
 {% endif %}
 </div>
 <script>
-function formSubmit(){
-    document.getElementById("ap_com").value = document.getElementById("ap_com").value.replace(" ","_")
-}
-$("ul.nav-tabs a").click(function (e) {
-  e.preventDefault();
-    $(this).tab('show');
-});
+    function formSubmit() {
+        document.getElementById("ap_com").value = document.getElementById("ap_com").value.replace(/\s/g, "_")
+    }
+
+    $("ul.nav-tabs a").click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    });
 
 </script>
 </body>

@@ -53,7 +53,7 @@ def add_appointment():
 
         response = make_response(render_template("add_appointment.html", form=form))
         response.headers[
-            'Content-Security-Policy'] = app.defualt_content_policy + ";" + app.js_content_policy + ";" + app.css_content_policy + "http://127.0.0.1:5000/static/css/add_appo.css"
+            'Content-Security-Policy'] = app.defualt_content_policy + ";" + app.js_content_policy + ";" + app.css_content_policy + ";"
         return response
     else:
         return abort(403)

@@ -56,19 +56,18 @@
     function add_tags(id,value){
         var uncheck = $("input[type='checkbox'][id^=category-]").filter(':checked')
 
-        if (uncheck.length == 0){
-                $('#tags').css('display','none')
-                $('#tags').children().css({"display":"none"})
-                $('#tags').parent().find("label")[0].style.display = "none"
+        if (uncheck.length == 0) {
+            $('#tags').css('display', 'none')
+            $('#tags').children().css({"display": "none"})
+            $('#tags').parent().find("label")[0].style.display = "none"
         }
-        if($('#'+id).is(':checked')){
-            $('#tags').css('display','block')
+        if ($('#' + id).is(':checked')) {
+            $('#tags').css('display', 'block')
             $('#tags').parent().find("label")[0].style.display = "block"
-            $("input[type='checkbox'][value^="+value+"]").parent().css({"display":"block"})
-        }
-        else{
-           $("input[type='checkbox'][value^="+value+"_]").parent().css({"display":"none"})
-            $("input[type='checkbox'][value^="+value+"_]").prop('checked',false)
+            $("input[type='checkbox'][value^='" + value + "']").parent().css({"display": "block"})
+        } else {
+            $("input[type='checkbox'][value^='" + value + "_']").parent().css({"display": "none"})
+            $("input[type='checkbox'][value^='" + value + "_']").prop('checked', false)
         }
     }
 </script>

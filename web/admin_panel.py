@@ -22,22 +22,16 @@ def admin_panel():
                 table_len = range(len(student_tb))  # table len is for the for loop in the html
                 response = make_response(render_template("adminPanel.html", table_len=table_len, st_table=student_tb,
                                                          current_user=current_user, choose=choose))
-                response.headers['Content-Security-Policy'] = app.defualt_content_policy + \
-                                                              ";" + app.js_content_policy + \
-                                                              "http://127.0.0.1:5000/static/Javascript/adminpanel.js ;" + \
-                                                              app.css_content_policy + \
-                                                              "http://127.0.0.1:5000/static/css/adminpanel.css"
+                response.headers[
+                    'Content-Security-Policy'] = app.defualt_content_policy + ";" + app.js_content_policy + ";" + app.css_content_policy + ";"
                 return response
             elif choose == "lecturers":
                 student_tb = app.User.query.filter_by(role="lecturer").all()  # get all lecterurs
                 table_len = range(len(student_tb))  # table len is for the for loop in the html
                 response = make_response(render_template("adminPanel.html", table_len=table_len, st_table=student_tb,
                                                          current_user=current_user, choose=choose))
-                response.headers['Content-Security-Policy'] = app.defualt_content_policy + \
-                                                              ";" + app.js_content_policy + \
-                                                              "http://127.0.0.1:5000/static/Javascript/adminpanel.js ;" + \
-                                                              app.css_content_policy + \
-                                                              "http://127.0.0.1:5000/static/css/adminpanel.css"
+                response.headers[
+                    'Content-Security-Policy'] = app.defualt_content_policy + ";" + app.js_content_policy + ";" + app.css_content_policy + ";"
                 return response
 
             elif choose == "appos":
@@ -45,55 +39,51 @@ def admin_panel():
                     appo_user = app.Appointment.query.filter_by(uname=request.form["search1"]).order_by(
                         app.Appointment.appo_date,
                         app.Appointment.appo_start_hour).all()
-                else:
+                else:  # get all users appointments
                     appo_user = app.Appointment.query.order_by(app.Appointment.appo_date,
-                                                               app.Appointment.appo_start_hour).all()  # get all users appointments
+                                                               app.Appointment.appo_start_hour).all()
 
                 table_len = range(len(appo_user))  # table len is the length of the table
                 for i in table_len:
                     if appo_user[i].appo_user_wait:  # if it's not none
                         temp = appo_user[i].appo_user_wait.replace("\n", "")
                         if temp:
-                            appo_user[i].appo_user_wait = appo_user[i].appo_user_wait.split("\n")[
-                                                          1:]  # the users in appo_user_wait save \n name...\n name \n ..... so get list of all users I split by \n
-                            appo_user[i].appo_user_wait.append(len(appo_user[
-                                                                       i].appo_user_wait))  # add the length of the list in the last elemnt of list to the blocks of delete in the table
-                        else:
-                            appo_user[i].appo_user_wait = appo_user[i].appo_user_wait.replace("\n",
-                                                                                              "")  # else if no user wait for approve the objects value become to "" which is nothing
+                            # the users in appo_user_wait save \n name...\n name \n ..... so get list of all users I split by \n
+                            appo_user[i].appo_user_wait = appo_user[i].appo_user_wait.split("\n")[1:]
+
+                            # add the length of the list in the last elemnt of list to the blocks of delete in the table
+                            appo_user[i].appo_user_wait.append(len(appo_user[i].appo_user_wait))
+
+                        else:  # else if no user wait for approve the objects value become to "" which is nothing
+                            appo_user[i].appo_user_wait = appo_user[i].appo_user_wait.replace("\n", "")
                     if appo_user[i].appo_user_aproved:  # if it's not none
                         temp = appo_user[i].appo_user_aproved.replace("\n", "")
                         if temp:
-                            appo_user[i].appo_user_aproved = appo_user[i].appo_user_aproved.split("\n")[
-                                                             1:]  # the users in appo_user_aproved save \n name...\n name \n ..... so get list of all users I split by \n
-                            appo_user[i].appo_user_aproved.append(len(appo_user[
-                                                                          i].appo_user_aproved))  # add the length of the list in the last elemnt of list to the blocks of delete in the table
-                        else:
-                            appo_user[i].appo_user_aproved = appo_user[i].appo_user_aproved.replace("\n",
-                                                                                                    "")  # else if no user wait for approve the objects value become to "" which is nothing
+                            # the users in appo_user_aproved save \n name...\n name \n ..... so get list of all users I split by \n
+                            appo_user[i].appo_user_aproved = appo_user[i].appo_user_aproved.split("\n")[1:]
+
+                            # add the length of the list in the last elemnt of list to the blocks of delete in the table
+                            appo_user[i].appo_user_aproved.append(len(appo_user[i].appo_user_aproved))
+                        else:  # else if no user wait for approve the objects value become to "" which is nothing
+                            appo_user[i].appo_user_aproved = appo_user[i].appo_user_aproved.replace("\n", "")
                 response = make_response(
                     render_template("adminPanel.html", table_len=table_len, appo_user=appo_user, choose="appos"))
-                response.headers['Content-Security-Policy'] = app.defualt_content_policy + \
-                                                              ";" + \
-                                                              app.js_content_policy + \
-                                                              "http://127.0.0.1:5000/static/Javascript/adminpanel.js ;" + \
-                                                              app.css_content_policy + \
-                                                              "http://127.0.0.1:5000/static/css/adminpanel.css"
+                response.headers[
+                    'Content-Security-Policy'] = app.defualt_content_policy + ";" + app.js_content_policy + ";" + app.css_content_policy + ";"
                 return response
             elif choose == "records":
                 records_tb = app.Record.query.all()  # get all records
                 table_len = range(len(records_tb))  # the length of records table
                 response = make_response(
                     render_template("adminPanel.html", table_len=table_len, records_tb=records_tb, choose="records"))
-                response.headers['Content-Security-Policy'] = app.defualt_content_policy + \
-                                                              ";" + app.js_content_policy + \
-                                                              "http://127.0.0.1:5000/static/Javascript/adminpanel.js ; " + \
-                                                              app.css_content_policy + \
-                                                              "http://127.0.0.1:5000/static/css/adminpanel.css"
+
+                response.headers[
+                    'Content-Security-Policy'] = app.defualt_content_policy + ";" + app.js_content_policy + ";" + app.css_content_policy + ";"
                 return response
-            if "action" in request.form:  # the action name is for confirmation delete and reject
-                if request.form[
-                    "action"] == "אישור":  # delete the users from the waiting to approve column in the row of the appoinntment and add the user the approved users for the appointment
+            # the action name is for confirmation delete and reject
+            if "action" in request.form:
+                # delete the users from the waiting to approve column in the row of the appoinntment and add the user the approved users for the appointment
+                if request.form["action"] == "אישור":
                     appo_approve = app.Appointment.query.filter_by(uname=htmlentities.encode(request.form["lect_name"]),
                                                                    appo_date=htmlentities.encode(
                                                                        request.form["ap_date"]),
@@ -134,7 +124,7 @@ def admin_panel():
         if request.method == "GET":
             response = make_response(render_template("adminPanel.html", choose="bb"))  # used for check
             response.headers[
-                'Content-Security-Policy'] = app.defualt_content_policy + ";" + app.js_content_policy + "http://127.0.0.1:5000/static/Javascript/adminpanel.js ;" + app.css_content_policy + "http://127.0.0.1:5000/static/css/adminpanel.css"
+                'Content-Security-Policy'] = app.defualt_content_policy + ";" + app.js_content_policy + ";" + app.css_content_policy + ";"
             return response
 
     return abort(403)

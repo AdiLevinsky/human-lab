@@ -16,8 +16,21 @@
         {{ wtf.quick_form(form, button_map={"submit": "primary"},id="log-form") }}
       </div>
     </div>
-  </div>
+</div>
 
+<script>
+    $('#log-form').on('submit', function () {
+        if (document.getElementsByName("password")[0].value != "") {
+            if (document.getElementsByName("password")[0].value.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/)) {
+                return true;
+            } else {
+                alert("הסיסמה חלשה ")
+                return false;
 
+            }
+        }
+
+    })
+</script>
 </body>
 </html>

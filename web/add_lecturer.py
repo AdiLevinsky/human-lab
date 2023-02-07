@@ -40,7 +40,7 @@ def add_lecturer():
             tags = "|".join(form.tags.data)
             if form.image.data.filename:
 
-                lect = app.User(uname=form.uname.data, fname=form.fname.data, lname=form.lname.data,
+                lect = app.User(uname=form.uname.data.strip(), fname=form.fname.data, lname=form.lname.data,
                                 password=hash_and_salted_password, role='lecturer', category=cati, tags=tags,
                                 desc=form.desc.data,
                                 image=form.image.data.filename)
@@ -48,7 +48,7 @@ def add_lecturer():
                 filename = secure_filename(form.image.data.filename)
                 form.image.data.save('static/uploads/' + filename)
             else:
-                lect = app.User(uname=form.uname.data, fname=form.fname.data, lname=form.lname.data,
+                lect = app.User(uname=form.uname.data.strip(), fname=form.fname.data, lname=form.lname.data,
                                 password=hash_and_salted_password, role='lecturer', category=cati, tags=tags,
                                 desc=form.desc.data,
                                 image="avatar-g489e3d884_1280.png")
@@ -56,8 +56,9 @@ def add_lecturer():
             app.db.session.commit()
             return redirect(url_for('admin_panel.admin_panel'))
         response = make_response(render_template("add_lecturer.html", form=form))
+
         response.headers[
-            'Content-Security-Policy'] = app.defualt_content_policy + ";" + app.js_content_policy + "http://127.0.0.1:5000/static/Javascript/add_lecturer.js;" + app.css_content_policy + "http://127.0.0.1:5000/static/css/add_stud.css"
+            'Content-Security-Policy'] = app.defualt_content_policy + ";" + app.js_content_policy + ";" + app.css_content_policy + ";"
         return response
     else:
         return abort(403)
