@@ -38,56 +38,57 @@
                                                 type="hidden"
                                                 name="csrf_token"
                                                 value="{{ csrf_token() }}"/><input
-                                                type="hidden" value="{{ i }}" name="record">
+                                                type="hidden" value="{{ tags[k] }}" name="record">
                                             <button type="submit" class="btn btn-primary">סרטונים והקלטות</button>
                                         </form>
                                         {% for j in user_cat %}
                                             {% for user_category in j.category.split(",") %}
-                                    {% if user_category in cat[i] %}
-                                        {% if j.tags != None %}
-                                            {% set tags2 = j.tags.split("|") %}
-                                            {% for usertags in tags2 %}
-                                                {% if usertags in tags[k] %}
-                                                    <form method="post" style="display: inline"
-                                                          action="{{ url_for('set_appointment.set_appointment') }}">
-                                                        <input type="hidden" name="csrf_token"
-                                                               value="{{ csrf_token() }}"/><input type="hidden"
-                                                                                                  value="{{ j.uname }}"
-                                                                                                  name="val">
-                                                        <button type="submit"
-                                                                class="btn btn-primary">{{ j.fname }} {{ j.lname }}</button>
-                                                    </form>
+                                                {% if user_category in cat[i] %}
+                                                    {% if j.tags != None %}
+                                                        {% set tags2 = j.tags.split("|") %}
+                                                        {% for usertags in tags2 %}
+                                                            {% if usertags in tags[k] %}
+                                                                <form method="post" style="display: inline"
+                                                                      action="{{ url_for('set_appointment.set_appointment') }}">
+                                                                    <input type="hidden" name="csrf_token"
+                                                                           value="{{ csrf_token() }}"/><input
+                                                                        type="hidden"
+                                                                        value="{{ j.uname }}"
+                                                                        name="val">
+                                                                    <button type="submit"
+                                                                            class="btn btn-primary">{{ j.fname }} {{ j.lname }}</button>
+                                                                </form>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    {% endif %}
                                                 {% endif %}
+
                                             {% endfor %}
-                                        {% endif %}
-                                    {% endif %}
-
-                                {% endfor %}
-                            {% endfor %}
-                        </div>
-                    </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
                 {% endif %}
-            {% endfor %}
-          </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
     </div>
-          </div>
-    {% endfor %}
-    </div>
-{% if found %}
-    <div class="container">
-    <div class="row">
-    <div class="col-lg-6">
-        <img src="static/uploads/{{ found[0].image }}" width="300">
-    </div>
-        <div class="col-lg-6" style="text-align: center">
-        <h1>{{ found[0].fname }} {{ found[0].lname }}</h1>
-            <p>{{ found[0].desc }}</p>
+    {% if found %}
+        <div class="container" id="set_meeting">
+            <div class="row">
+                <div class="col-lg-6">
+                    <img src="static/uploads/{{ found[0].image }}" width="300" style="margin-top: 20px">
+                </div>
+                <div class="col-lg-6" style="text-align: center">
+                    <h1>{{ found[0].fname }} {{ found[0].lname }}</h1>
+                    <p>{{ found[0].desc }}</p>
 
 
-    </div>
-    </div>
-    <div class="row">
-        <p id="cal">{{ caln | safe}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <p id="cal">{{ caln | safe }}</p>
     </div>
     </div>
     {% for appo in month_appo %}
@@ -137,29 +138,37 @@
 
       </div>
 
-    </div>
+      </div>
   </div>
-</div>
+    </div>
     {% endfor %}
-{% endif %}
-{% if records %}
-    <div class="container">
-    <h2 style="text-align: center">{{ record_cat }}</h2>
-    <div class="row">
-    {% for i in records_len %}
-        <div class="col-lg-4 col-sm-12 col-md-6" style="text-align: center">
-    <h3>{{ records[i].title }}</h3>
-    <p>{{ records[i].desc }}</p>
-    <a href="{{ records[i].link }}">{{ records[i].title }}</a>
+    {% endif %}
+    {% if records %}
+        <div class="container">
+            <h2 style="text-align: center">{{ record_cat | replace("_"," ") }}</h2>
+            <div class="row">
+                {% for i in records_len %}
+                    <div class="col-lg-4 col-sm-12 col-md-6" style="text-align: center">
+                        <h3>{{ records[i].title }}</h3>
+                        <p>{{ records[i].desc }}</p>
+                        <a href="{{ records[i].link }}">{{ records[i].title }}</a>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
-{% endfor %}
-    </div>
-    </div>
 {% endif %}
 </div>
 <script>
+    $(document).ready(function () {
+            if ($('#set_meeting').length != 0) {
+                location.replace(window.location.href.split("#")[0] + "#set_meeting")
+            }
+        }
+    )
+
     function formSubmit() {
         document.getElementById("ap_com").value = document.getElementById("ap_com").value.replace(/\s/g, "_")
+        document.getElementById("ap_com").value = document.getElementById("ap_com").value.replace(/\n/g, ",")
     }
 
     $("ul.nav-tabs a").click(function (e) {

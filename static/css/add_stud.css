@@ -1,6 +1,7 @@
 #log-form{
     text-align: right;
-    font-size: 3em;
+    font-size: 2rem;
+    font-weight: bold;
 }
 .page-heading{
     text-align: center;
@@ -8,11 +9,15 @@
 }
 #log-form > #submit{
     width:100%;
-    font-size: 1em;
 }
+
 .errors {
     text-align: right;
-    font-size: 2.5em;
+    font-size: 2em;
     color: red;
     font-weight: bold;
+}
+
+input[type=submit] {
+    margin-top: 20px;
 }

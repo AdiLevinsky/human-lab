@@ -1,9 +1,5 @@
-<style>
-    ul {
-        list-style-type: none;
-    }
-</style>
 {% include "adminHeader.html" %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/edit_lecturer.css') }}">
 <div class="container mt-3">
 
 
@@ -38,16 +34,16 @@
             </div>
           <label for="desc1" class="form-label">תיאור</label>
           <input type="text" name="desc1" class="form-control" value="{{ desc }}">
-          <label for="image1" class="form-label">תמונה</label>
-          <input type="file" name="image1" class="form-control" >
-          <input type="submit" value="שנה" style="width:100%" class="btn-primary">
-          </form>
+        <label for="image1" class="form-label">תמונה</label>
+        <input type="file" name="image1" class="form-control">
+        <input type="submit" value="שנה" style="width:100%" class="btn btn-primary">
+    </form>
 
-    </div>
-  </div>
+</div>
+</div>
 <script>
-    function check_strong_password(){
-        if (document.getElementsByName("password1")[0].value != ""){
+    function check_strong_password() {
+        if (document.getElementsByName("password1")[0].value != "") {
             if (document.getElementsByName("password1")[0].value.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/)) {
                 return true;
             } else {

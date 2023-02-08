@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="{{ url_for('static',filename='css/adminpanel.css') }}">
 {% endblock %}
 <div class="container-fluid">
-    <div class="row">
+    <div class="row g-0">
         <div class="col-lg-4 col-md-4 col-sm-12">
             <button style="width:100%" onclick="select_type()" id="btn_types" class="btn btn-outline-primary">טבלת
                 משתמשים
@@ -26,7 +26,7 @@
         </div>
     </div>
     <div style="display: none;" id="types">
-        <div class="row">
+        <div class="row g-0">
             <div class="col-lg-6 col-md-6 col-sm-12">
                 <form method="post" action="{{ url_for('admin_panel.admin_panel') }}"><input type="hidden"
                                                                                              name="csrf_token"
@@ -152,7 +152,7 @@
                   action="{{ url_for('edit_appointment.edit_appointment') }}"><input type="hidden" name="csrf_token"
                                                                                      value="{{ csrf_token() }}"/></form>
         {% endfor %}
-        <div class="row">
+        <div class="row g-0">
             <div class="col-lg-8 col-md-8 col-sm-0"></div>
             <div class="col-lg-4 col-md-4 col-sm-12">
                 <form action="{{ url_for('admin_panel.admin_panel') }}" method="post">

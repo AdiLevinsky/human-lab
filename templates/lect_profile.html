@@ -1,4 +1,5 @@
 {% include "lect_header.html" %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/lect_profile.css') }}">
 <div class="container mt-3">
 
 
@@ -20,7 +21,7 @@
           <label for="image1" class="form-label">תמונה<br><img width="300" src="static/uploads/{{ lect_info.image }}"></label>
 
         <input type="file" name="image1" class="form-control">
-        <input type="submit" value="שנה" style="width:100%" class="btn-primary">
+        <input type="submit" value="שנה" style="width:100%" class="btn btn-primary">
     </form>
 
 </div>

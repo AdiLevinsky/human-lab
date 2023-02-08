@@ -8,3 +8,15 @@ input[type="text"]{
 td,th{
     text-align: center;
 }
+@media screen and (max-width: 768px) {
+    .bp3-overflow-list > form > .btn {
+        width: 100%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .nav-tabs > .nav-item {
+        width: 100%;
+    }
+
+}

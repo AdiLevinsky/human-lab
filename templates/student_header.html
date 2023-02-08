@@ -49,17 +49,18 @@
                     <a class="nav-link" href="{{ url_for('logout.logout') }}" style="float:left">יציאה</a>
                 </li>
             </ul>
-            <form class="navbar-form navbar-left" method="Post" action="{{ url_for('search.search') }}">
+            <form class="navbar-form navbar-left" style="margin-left: 10px" method="Post"
+                  action="{{ url_for('search.search') }}">
                 <div class="input-group">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     <input type="text" class="form-control" placeholder="חפש" name="tag" id="tag">
                     <div class="input-group-btn">
-                        <button class="btn btn-dark" type="submit">
+                        <button class="btn btn-info" type="submit">
                             חפש
                         </button>
                     </div>
                 </div>
             </form>
+        </div>
     </div>
-  </div>
 </nav>

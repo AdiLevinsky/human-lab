@@ -53,6 +53,6 @@ class add_record(FlaskForm):
     submit = SubmitField("הוסף")
 
 class add_category(FlaskForm):
-    category = StringField("קטגוריה",validators=[DataRequired()])
-    sub_category = StringField("תת קטגוריות (להפריד בין התת קטוגוריות עם _)")
+    category = StringField("קטגוריה", validators=[DataRequired()])
+    sub_category = StringField("תת קטגוריות (להפריד בין התת קטוגוריות עם _ )")
     submit = SubmitField("הוסף")

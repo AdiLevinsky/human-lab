@@ -36,7 +36,7 @@ def set_appointment():  # main
             continue
     tags = list(set(tags))
     if request.method == "POST" and "record" in request.form:  # if the user want the records of the category he choose
-        records = app.Record.query.filter_by(category=request.form["record"]).all()
+        records = app.Record.query.filter_by(tags=request.form["record"]).all()
         record_cat = request.form["record"]
         records_len = range(len(records))
         response = make_response(

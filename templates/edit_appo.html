@@ -3,6 +3,7 @@
 {% else %}
     {% include "lect_header.html" %}
 {% endif %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/edit_appo.css') }}">
 <div class="container mt-3">
     <div class="row">
         <div class="col-lg-3 col-md-3 col-sm-12">
@@ -41,17 +42,17 @@
           </select>
           <label for="appo_limit1" class="form-label">כמות אנשים</label>
           <input type="number" min="1" name="appo_limit1" class="form-control" id="appo_limit1" value="{{ ap_limit }}">
-          <input type="submit" value="שנה" style="width:100%;text-align: center" class="btn-primary">
-          </form>
+                <input type="submit" value="שנה" style="width:100%;text-align: center" class="btn btn-primary">
+            </form>
+        </div>
     </div>
-  </div>
 </div>
 <script>
     //TODO לתקן את הפרטני ולהוסיף לשם ערך של מגבלת הקבוצה שווה אחד
-$('select').on('change', function() {
-    if ($("#appo_type1").val() == "קבוצה") {
-        $("#appo_limit1").css("display", "block")
-        $("label[for='appo_limit1']").css("display","inline")
+    $('select').on('change', function () {
+        if ($("#appo_type1").val() == "קבוצה") {
+            $("#appo_limit1").css("display", "block")
+            $("label[for='appo_limit1']").css("display", "inline")
         $("#appo_limit1").val(1)
 
     }

@@ -7,19 +7,19 @@
             <form method="post" action="{{ url_for('student_profile.student_profile') }}"
                   style="text-align: right;margin-bottom: 10px" onsubmit="return check_strong_password()">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                <label for="uname1" class="form-label">שם משתמש</label>
+                <label for="uname1" style="font-weight: bold;font-size: 2rem" class="form-label">שם משתמש</label>
                 <input type="text" name="uname1" value="{{ uname }}" class="form-control" readonly>
-                <label for="fname1" class="form-label">שם פרטי</label>
+                <label for="fname1" style="font-weight: bold;font-size: 2rem" class="form-label">שם פרטי</label>
                 <input type="text" name="fname1" value="{{ fname }}" class="form-control">
-                <label for="lname1" class="form-label">שם משפחה</label>
+                <label for="lname1" style="font-weight: bold;font-size: 2rem" class="form-label">שם משפחה</label>
                 <input type="text" name="lname1" value="{{ lname }}" class="form-control">
-                <label for="password1" class="form-label">סיסמה</label>
+                <label for="password1" style="font-weight: bold;font-size: 2rem" class="form-label">סיסמה</label>
                 <input type="text" name="password1" class="form-control">
-                <input type="submit" value="שנה" style="width:100%;margin-top: 5px" class="btn-primary">
-          </form>
-    </div>
-    <div class="col-lg-6 col-md-6 col-sm-12">
-        {% for i in table_len %}
+                <input type="submit" value="שנה" style="width:100%;margin-top: 20px" class="btn btn-primary">
+            </form>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            {% for i in table_len %}
             <div class="card text-end"  style="width:100%">
     <div class="card-body">
       <h4 class="card-title">פגישה ב{{ user_appos[i].appo_date }} {{ user_appos[i].appo_start_hour }}</h4>

@@ -1,9 +1,5 @@
-<style>
-    ul {
-        list-style-type: none;
-    }
-</style>
 {% include "adminHeader.html" %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/edit_record.css') }}">
 <div class="container mt-3">
 
 
@@ -35,13 +31,13 @@
           <input type="text" name="desc1" value="{{ desc }}" class="form-control">
           <label for="link1" class="form-label">לינק</label>
           <input type="text" name="link1" class="form-control" value="{{ link }}">
-          <input type="submit" value="שנה" style="width:100%" class="btn-primary">
-          </form>
+        <input type="submit" value="שנה" style="width:100%" class="btn btn-primary">
+    </form>
 
-    </div>
+</div>
 <script>
-    $(document).ready(function (){
-        $('#tags').children().css({"display":"none"})
+    $(document).ready(function () {
+        $('#tags').children().css({"display": "none"})
         {% for i in checked_category %}
             $("input[type='checkbox'][name='{{ i }}']").prop('checked',true)
             //document.getElementsByName("{{ i }}").checked = true;
