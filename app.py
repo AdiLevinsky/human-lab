@@ -1,10 +1,10 @@
 from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask_login import UserMixin, LoginManager
-from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
 
+from flask_session import Session
 from web import login, logout, admin_panel, admin_profile, add_student, edit_user, add_lecturer, edit_lecturer, \
     add_appointment, set_appointment, lecturer_panel, edit_appointment, add_record, edit_record, student_profile, \
     lecturer_profile, \
@@ -17,7 +17,7 @@ Session(app)
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'  # important to change in production !!!!
 app.config['UPLOAD_FOLDER'] = 'static/uploads/'
 Bootstrap(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///school.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@127.0.0.1/school'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 login_manager = LoginManager()
@@ -114,26 +114,27 @@ class Record(db.Model):
 #     db.session.commit()
 #     db.session.commit()
 
+app.register_blueprint(login.login_bp)
+app.register_blueprint(logout.logout_bp)
+app.register_blueprint(admin_panel.admin_panel_bp)
+app.register_blueprint(admin_profile.admin_profile_bp)
+app.register_blueprint(add_student.add_student_bp)
+app.register_blueprint(edit_user.edit_user_bp)
+app.register_blueprint(add_lecturer.add_lecturer_bp)
+app.register_blueprint(edit_lecturer.edit_lecturer_bp)
+app.register_blueprint(add_appointment.add_appointment_bp)
+app.register_blueprint(set_appointment.set_appointment_bp)
+app.register_blueprint(lecturer_panel.lecturer_panel_bp)
+app.register_blueprint(edit_appointment.edit_appointment_bp)
+app.register_blueprint(add_record.add_record_bp)
+app.register_blueprint(edit_record.edit_record_bp)
+app.register_blueprint(student_profile.student_profile_bp)
+app.register_blueprint(lecturer_profile.lecturer_profile_bp)
+app.register_blueprint(del_appointment.del_appointment_bp)
+app.register_blueprint(send_msg.send_msg_bp)
+app.register_blueprint(add_category.add_category_bp)
+app.register_blueprint(search.search_bp)
+app.register_blueprint(edit_category.edit_category_bp)
+
 if __name__ == '__main__':
-    app.register_blueprint(login.login_bp)
-    app.register_blueprint(logout.logout_bp)
-    app.register_blueprint(admin_panel.admin_panel_bp)
-    app.register_blueprint(admin_profile.admin_profile_bp)
-    app.register_blueprint(add_student.add_student_bp)
-    app.register_blueprint(edit_user.edit_user_bp)
-    app.register_blueprint(add_lecturer.add_lecturer_bp)
-    app.register_blueprint(edit_lecturer.edit_lecturer_bp)
-    app.register_blueprint(add_appointment.add_appointment_bp)
-    app.register_blueprint(set_appointment.set_appointment_bp)
-    app.register_blueprint(lecturer_panel.lecturer_panel_bp)
-    app.register_blueprint(edit_appointment.edit_appointment_bp)
-    app.register_blueprint(add_record.add_record_bp)
-    app.register_blueprint(edit_record.edit_record_bp)
-    app.register_blueprint(student_profile.student_profile_bp)
-    app.register_blueprint(lecturer_profile.lecturer_profile_bp)
-    app.register_blueprint(del_appointment.del_appointment_bp)
-    app.register_blueprint(send_msg.send_msg_bp)
-    app.register_blueprint(add_category.add_category_bp)
-    app.register_blueprint(search.search_bp)
-    app.register_blueprint(edit_category.edit_category_bp)
-    app.run(host="0.0.0.0")
+    app.run()

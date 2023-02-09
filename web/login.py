@@ -1,6 +1,7 @@
 import datetime
 
 import htmlentities
+import pytz
 from flask import render_template, redirect, url_for, flash, make_response, Blueprint
 from flask_login import login_user, current_user
 from werkzeug.security import check_password_hash
@@ -10,16 +11,16 @@ from forms import LoginForm
 
 login_bp = Blueprint("login", __name__)
 
-
+tz = pytz.timezone("Asia/Tel_Aviv")
 @login_bp.route("/", methods=["POST", "GET"])
 def login():  # put application's code here
     # for auto delete of old appoitmnets
     appo_user = app.Appointment.query.order_by(app.Appointment.appo_date,
                                                app.Appointment.appo_start_hour).all()
     for i in range(len(appo_user)):
-        if appo_user[i].appo_date < datetime.datetime.now().strftime("%Y-%m-%d") or appo_user[i].appo_date \
-                == datetime.datetime.now().strftime("%Y-%m-%d") \
-                and appo_user[i].appo_start_hour < datetime.datetime.now().strftime("%H:%M"):
+        if appo_user[i].appo_date < datetime.datetime.now(tz).strftime("%Y-%m-%d") or appo_user[i].appo_date \
+                == datetime.datetime.now(tz).strftime("%Y-%m-%d") \
+                and appo_user[i].appo_start_hour < datetime.datetime.now(tz).strftime("%H:%M"):
             app.Appointment.query.filter_by(id=appo_user[i].id).delete()
             app.db.session.commit()
 

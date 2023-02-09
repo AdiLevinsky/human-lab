@@ -160,8 +160,8 @@
                                                                                      value="{{ csrf_token() }}"/></form>
         {% endfor %}
         <div class="row g-0">
-            <div class="col-lg-8 col-md-8 col-sm-0"></div>
-            <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="col-lg-9 col-md-9 col-sm-0"></div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
                 <form action="{{ url_for('admin_panel.admin_panel') }}" method="post">
                     <div class="input-group">
                         <input type="hidden" value="appos" name="choose">
@@ -368,7 +368,6 @@
 
             </table>
         </div>
-        </div>
     {% endif %}
 {% if choose=="categories" %}
     {% for i in table_len %}
@@ -408,6 +407,7 @@
             {% endfor %}
 
         </table>
+    </div>
     </div>
     </div>
 
