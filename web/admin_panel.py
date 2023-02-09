@@ -80,6 +80,16 @@ def admin_panel():
                 response.headers[
                     'Content-Security-Policy'] = app.defualt_content_policy + ";" + app.js_content_policy + ";" + app.css_content_policy + ";"
                 return response
+            elif choose == "categories":
+                categories_tb = app.Category.query.all()  # get all records
+                table_len = range(len(categories_tb))  # the length of records table
+                response = make_response(
+                    render_template("adminPanel.html", table_len=table_len, categories_tb=categories_tb,
+                                    choose="categories"))
+
+                response.headers[
+                    'Content-Security-Policy'] = app.defualt_content_policy + ";" + app.js_content_policy + ";" + app.css_content_policy + ";"
+                return response
             # the action name is for confirmation delete and reject
             if "action" in request.form:
                 # delete the users from the waiting to approve column in the row of the appoinntment and add the user the approved users for the appointment

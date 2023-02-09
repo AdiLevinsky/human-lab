@@ -1,0 +1,18 @@
+{% include "adminHeader.html" %}
+<link rel="stylesheet" href="{{ url_for('static',filename='css/add_category.css') }}">
+<div class="container mt-3">
+
+
+    <form method="post" action="{{ url_for('edit_category.edit_category') }}" style="text-align: right">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <input type="hidden" name="cat_id" value="{{ cat_id }}" class="form-control">
+        <label for="category" class="form-label">קטגוריה</label>
+        <input type="text" name="category" value="{{ category }}" class="form-control">
+        <label for="tags" class="form-label">תת קטגוריות (להפריד בין התת קטוגוריות עם _ )</label>
+        <input type="text" name="tags" value="{{ tags }}" class="form-control">
+        <input type="submit" value="שנה" style="width:100%" class="btn btn-primary">
+    </form>
+
+</div>
+</body>
+</html>

@@ -1,19 +1,20 @@
 from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask_login import UserMixin, LoginManager
+from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
 
 from web import login, logout, admin_panel, admin_profile, add_student, edit_user, add_lecturer, edit_lecturer, \
     add_appointment, set_appointment, lecturer_panel, edit_appointment, add_record, edit_record, student_profile, \
     lecturer_profile, \
-    del_appointment, send_msg, add_category, search
+    del_appointment, send_msg, add_category, search, edit_category
 
 # Configuration do not touch
 app = Flask(__name__)
-
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'  # important to change in production !!!!
-
 app.config['UPLOAD_FOLDER'] = 'static/uploads/'
 Bootstrap(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///school.db'
@@ -21,9 +22,11 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+
 app.config.update(
-    SESSION_COOKIE_SECURE=True,
-    SESSION_COOKIE_HTTPONLY=True,
+    SESSION_COOKIE_SECURE=False,  # change it to True when ssl is on
+    SESSION_COOKIE_HTTPONLY=False,  # change to True when ssl is on
     SESSION_COOKIE_SAMESITE='Lax',
 
 )
@@ -132,4 +135,5 @@ if __name__ == '__main__':
     app.register_blueprint(send_msg.send_msg_bp)
     app.register_blueprint(add_category.add_category_bp)
     app.register_blueprint(search.search_bp)
-    app.run()
+    app.register_blueprint(edit_category.edit_category_bp)
+    app.run(host="0.0.0.0")
