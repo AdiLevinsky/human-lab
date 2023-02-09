@@ -39,8 +39,7 @@ js_content_policy = " script-src 'self' 'unsafe-inline' "
 css_content_policy = " style-src https: 'self' 'unsafe-inline' "
 
 
-# todo אפשרות חיפוש זה אופצינאלי
-# todo להוסיף את ההערות בטבלה של האדמין
+#todo add tables for categories and edit category
 
 # _____________Dictionary________
 # appo is the abbreviated of appointment
@@ -133,4 +132,4 @@ if __name__ == '__main__':
     app.register_blueprint(send_msg.send_msg_bp)
     app.register_blueprint(add_category.add_category_bp)
     app.register_blueprint(search.search_bp)
-    app.run(debug=True)
+    app.run()
